@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GameSketch;
 using FluentAssertions;
+using System.Linq;
 
 namespace GameSketchTest
 {
@@ -41,6 +42,18 @@ namespace GameSketchTest
         public void OneGameShouldBeInProgress()
         {
             _tournament.Games().Should().Contain((game) => game.IsInProgress());
+        }
+
+        [TestMethod]
+        public void OneGameShouldNotBeInProgress()
+        {
+            _tournament.Games().Where(game => !game.IsInProgress()).Count().Should().Be(1);
+        }
+
+        [TestMethod]
+        public void TwoGamesShouldNotBeCompleted()
+        {
+            _tournament.Games().Where(game => !game.IsCompleted()).Count().Should().Be(2);
         }
     }
 }
