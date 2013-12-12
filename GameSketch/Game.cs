@@ -23,6 +23,36 @@ namespace GameSketch
         {
             return _dudes;
         }
+
+        public bool IsOpen()
+        {
+            return _dudes.Count == 1;
+        }
+
+        public bool IsInProgress()
+        {
+            return !IsOpen() && !IsCompleted();
+        }
+
+        public Dude Winner()
+        {
+            return _winner;
+        }
+
+        public void MarkWinner(Dude winner)
+        {
+            _winner = winner;
+        }
+
+        public bool IsCompleted()
+        {
+            return _winner != null;
+        }
+
+        public void AddDude(Dude dude)
+        {
+            _dudes.Add(dude);
+        }
     }
 
     public class Dude
@@ -59,12 +89,12 @@ namespace GameSketch
             return _games;
         }
 
-        internal void AddGame(Game game)
+        public void AddGame(Game game)
         {
             _games.Add(game);
         }
 
-        internal IList<Dude> Dudes()
+        public IList<Dude> Dudes()
         {
             return _dudes;
         }
@@ -72,6 +102,12 @@ namespace GameSketch
 
     public class GameService
     {
+
+        public Game MarkWinner(Game _game, Dude _winner)
+        {
+            _game.MarkWinner(_winner);
+            return _game;
+        }
     }
 
     public class TournamentService
@@ -91,6 +127,14 @@ namespace GameSketch
         private int NumberOfGamesForNumberOfDudes(int numberOfDudesPerGame, int numberOfDudes)
         {
             return (int)Math.Ceiling((double)numberOfDudes / (double)numberOfDudesPerGame);
+        }
+
+        public Tournament GameWon(Tournament tournament, Game wonGame, Dude dudeWhoWon)
+        {
+            wonGame.MarkWinner(dudeWhoWon);
+            var openGame = tournament.Games().FirstOrDefault(game => game.IsOpen());
+            openGame.AddDude(dudeWhoWon);
+            return tournament;
         }
     }
 }

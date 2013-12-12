@@ -30,5 +30,17 @@ namespace GameSketchTest
         {
             _tournament.Games().Count.Should().Be(2);
         }
+
+        [TestMethod]
+        public void OneGameShouldBeOpen()
+        {
+            _tournament.Games().Should().Contain((game) => game.IsOpen());
+        }
+
+        [TestMethod]
+        public void OneGameShouldBeInProgress()
+        {
+            _tournament.Games().Should().Contain((game) => game.IsInProgress());
+        }
     }
 }

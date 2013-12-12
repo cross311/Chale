@@ -55,6 +55,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="WhenTheFirstGameHasAWinnerInATournamentWithThreeDudes.cs" />
     <Compile Include="WhenATournamentStartsWithThreeDudes.cs" />
     <Compile Include="WhenATournamentStartsWithTwoDudes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
