@@ -64,6 +64,10 @@ namespace GameSketch
             this._name = name;
         }
 
+        public string Name()
+        {
+            return _name;
+        }
     }
 
     public class Tournament
@@ -137,6 +141,8 @@ namespace GameSketch
             var openGame = tournament.Games().FirstOrDefault(game => game.IsOpen());
             if (openGame != null)
                 openGame.AddDude(dudeWhoWon);
+            else if (tournament.Games().Any(game => game.IsInProgress()))
+                tournament.AddGame(new Game(new Dude[] { dudeWhoWon }));
             else if (tournament.Games().All(game => game.IsCompleted()))
                 tournament.MarkWinner(dudeWhoWon);
 

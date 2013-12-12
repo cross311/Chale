@@ -55,6 +55,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="WhenALargeOddTournamentCompletes.cs" />
+    <Compile Include="WhenAGameHasAWinnerInATournamentWithFourDudes.cs" />
+    <Compile Include="WhenALargeEvenTournamentCompletes.cs" />
     <Compile Include="WhenTheGameHasAWinnerInATournamentWithTwoDudes.cs" />
     <Compile Include="WhenTheFirstGameHasAWinnerInATournamentWithThreeDudes.cs" />
     <Compile Include="WhenATournamentStartsWithThreeDudes.cs" />
