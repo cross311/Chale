@@ -39,18 +39,6 @@ namespace GameSketchTest
         }
 
         [TestMethod]
-        public void TheWonGameShouldBeMarkedAsCompleted()
-        {
-            _wonGame.IsCompleted().Should().Be(true);
-        }
-
-        [TestMethod]
-        public void TheWonGameShouldHaveAWinner()
-        {
-            _wonGame.Winner().Should().Be(_wonDude);
-        }
-
-        [TestMethod]
         public void TheSecondGameShouldBeInProgress()
         {
             _secondGame.IsInProgress().Should().Be(true);
