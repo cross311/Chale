@@ -8,6 +8,8 @@ namespace GameDataLayer
         Tournament Get(Guid id);
 
         IList<Tournament> Get();
+
+        bool Save(Tournament tournament);
     }
 
     public interface IGameRepo
@@ -15,6 +17,10 @@ namespace GameDataLayer
         Game Get(Guid id);
 
         IList<Game> GetByTournament(Guid tournamentId);
+
+        bool Save(Game game);
+
+        bool AddPlayer(Game game, Player player);
     }
 
     public interface IPlayerRepo
@@ -24,5 +30,7 @@ namespace GameDataLayer
         IList<Player> GetByTournament(Guid tournamentId);
 
         IList<Player> GetByGame(Guid gameId);
+
+        bool Save(Player player);
     }
 }
