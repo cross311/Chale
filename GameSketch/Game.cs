@@ -9,24 +9,24 @@ namespace GameSketch
     public class Game
     {
 
-        public Game(IEnumerable<Dude> dudes)
+        public Game(IEnumerable<Player> players)
         {
-            this._dudes = dudes.ToList();
+            this._players = players.ToList();
         }
 
-        private List<Dude> _dudes { get; set; }
-        private Dude _winner { get; set; }
+        private List<Player> _players { get; set; }
+        private Player _winner { get; set; }
         private string _name { get; set; }
 
 
-        public IList<Dude> Dudes()
+        public IList<Player> Players()
         {
-            return _dudes;
+            return _players;
         }
 
         public bool IsOpen()
         {
-            return _dudes.Count == 1;
+            return _players.Count == 1;
         }
 
         public bool IsInProgress()
@@ -34,12 +34,12 @@ namespace GameSketch
             return !IsOpen() && !IsCompleted();
         }
 
-        public Dude Winner()
+        public Player Winner()
         {
             return _winner;
         }
 
-        public void MarkWinner(Dude winner)
+        public void MarkWinner(Player winner)
         {
             _winner = winner;
         }
@@ -49,17 +49,17 @@ namespace GameSketch
             return _winner != null;
         }
 
-        public void AddDude(Dude dude)
+        public void AddPlayer(Player player)
         {
-            _dudes.Add(dude);
+            _players.Add(player);
         }
     }
 
-    public class Dude
+    public class Player
     {
         private string _name;
 
-        public Dude(string name)
+        public Player(string name)
         {
             this._name = name;
         }
@@ -74,19 +74,19 @@ namespace GameSketch
     {
         private string _name;
         private DateTime _startDate;
-        private List<Dude> _dudes;
+        private List<Player> _players;
         private List<Game> _games;
-        private Dude _winner;
+        private Player _winner;
 
         public Tournament()
         {
-            _dudes = new List<Dude>();
+            _players = new List<Player>();
             _games = new List<Game>();
         }
 
-        public void AddDude(Dude dude)
+        public void AddPlayer(Player player)
         {
-            _dudes.Add(dude);
+            _players.Add(player);
         }
 
         public IList<Game> Games()
@@ -99,12 +99,12 @@ namespace GameSketch
             _games.Add(game);
         }
 
-        public IList<Dude> Dudes()
+        public IList<Player> Players()
         {
-            return _dudes;
+            return _players;
         }
 
-        public Dude Winner()
+        public Player Winner()
         {
             return _winner;
         }
@@ -114,44 +114,44 @@ namespace GameSketch
             return _winner != null;
         }
 
-        internal void MarkWinner(Dude dude)
+        internal void MarkWinner(Player player)
         {
-            _winner = dude;
+            _winner = player;
         }
     }
 
     public class TournamentService
     {
-        const int NumberOfDudesPerGame = 2;
+        const int NumberOfPlayersPerGame = 2;
 
         public Tournament Start(Tournament tournament)
         {
-            var dudes = tournament.Dudes();
-            var numberOfGames = NumberOfGamesForNumberOfDudes(NumberOfDudesPerGame, dudes.Count);
+            var players = tournament.Players();
+            var numberOfGames = NumberOfGamesForNumberOfDudes(NumberOfPlayersPerGame, players.Count);
             for (int gameNumber = 0; gameNumber < numberOfGames; gameNumber++)
             {
-                tournament.AddGame(new Game(dudes.Skip(gameNumber * NumberOfDudesPerGame).Take(NumberOfDudesPerGame)));
+                tournament.AddGame(new Game(players.Skip(gameNumber * NumberOfPlayersPerGame).Take(NumberOfPlayersPerGame)));
             }
             return tournament;
         }
 
-        public Tournament GameWon(Tournament tournament, Game wonGame, Dude dudeWhoWon)
+        public Tournament GameWon(Tournament tournament, Game wonGame, Player playerWhoWon)
         {
-            wonGame.MarkWinner(dudeWhoWon);
+            wonGame.MarkWinner(playerWhoWon);
             var openGame = tournament.Games().FirstOrDefault(game => game.IsOpen());
             if (openGame != null)
-                openGame.AddDude(dudeWhoWon);
+                openGame.AddPlayer(playerWhoWon);
             else if (tournament.Games().Any(game => game.IsInProgress()))
-                tournament.AddGame(new Game(new Dude[] { dudeWhoWon }));
+                tournament.AddGame(new Game(new Player[] { playerWhoWon }));
             else if (tournament.Games().All(game => game.IsCompleted()))
-                tournament.MarkWinner(dudeWhoWon);
+                tournament.MarkWinner(playerWhoWon);
 
             return tournament;
         }
 
-        private int NumberOfGamesForNumberOfDudes(int numberOfDudesPerGame, int numberOfDudes)
+        private int NumberOfGamesForNumberOfDudes(int numberOfPlayersPerGame, int numberOfPlayers)
         {
-            return (int)Math.Ceiling((double)numberOfDudes / (double)numberOfDudesPerGame);
+            return (int)Math.Ceiling((double)numberOfPlayers / (double)numberOfPlayersPerGame);
         }
     }
 }

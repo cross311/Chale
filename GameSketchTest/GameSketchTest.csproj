@@ -56,11 +56,11 @@
   </Choose>
   <ItemGroup>
     <Compile Include="WhenALargeOddTournamentCompletes.cs" />
-    <Compile Include="WhenAGameHasAWinnerInATournamentWithFourDudes.cs" />
-    <Compile Include="WhenTheGameHasAWinnerInATournamentWithTwoDudes.cs" />
-    <Compile Include="WhenTheFirstGameHasAWinnerInATournamentWithThreeDudes.cs" />
-    <Compile Include="WhenATournamentStartsWithThreeDudes.cs" />
-    <Compile Include="WhenATournamentStartsWithTwoDudes.cs" />
+    <Compile Include="WhenAGameHasAWinnerInATournamentWithFourPlayers.cs" />
+    <Compile Include="WhenTheGameHasAWinnerInATournamentWithTwoPlayers.cs" />
+    <Compile Include="WhenTheFirstGameHasAWinnerInATournamentWithThreePlayers.cs" />
+    <Compile Include="WhenATournamentStartsWithThreePlayers.cs" />
+    <Compile Include="WhenATournamentStartsWithTwoPlayers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

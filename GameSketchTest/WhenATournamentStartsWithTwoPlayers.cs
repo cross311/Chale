@@ -6,17 +6,17 @@ using FluentAssertions;
 namespace GameSketchTest
 {
     [TestClass]
-    public class WhenATournamentStartsWithTwoDudes
+    public class WhenATournamentStartsWithTwoPlayers
     {
         private Tournament _tournament;
-        private Dude[] _dudes = new Dude[] { new Dude("Dude1"), new Dude("Dude2") };
+        private Player[] _players = new Player[] { new Player("Dude1"), new Player("Dude2") };
         
 
-        public WhenATournamentStartsWithTwoDudes()
+        public WhenATournamentStartsWithTwoPlayers()
         {
             _tournament = new Tournament();
-            _tournament.AddDude(_dudes[0]);
-            _tournament.AddDude(_dudes[1]);
+            _tournament.AddPlayer(_players[0]);
+            _tournament.AddPlayer(_players[1]);
             _tournament = new TournamentService().Start(_tournament);
         }
 
@@ -29,7 +29,7 @@ namespace GameSketchTest
         [TestMethod]
         public void GameShouldHaveTwoDudes()
         {
-            _tournament.Games()[0].Dudes().Should().Contain(_dudes[0]).And.Contain(_dudes[1]);
+            _tournament.Games()[0].Players().Should().Contain(_players[0]).And.Contain(_players[1]);
         }
     }
 }

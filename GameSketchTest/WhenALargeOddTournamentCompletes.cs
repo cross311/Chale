@@ -11,16 +11,16 @@ namespace GameSketchTest
     {
         private Random _rand = new Random();
 
-        private int NumberOfDudes = 49;
+        private int NumberOfPlayers = 49;
         private Tournament _tournament;
 
         public WhenALargeOddTournamentCompletes()
         {
             _tournament = new Tournament();
 
-            for (int dudeNumber = 1; dudeNumber <= NumberOfDudes; dudeNumber++)
+            for (int playerNumber = 1; playerNumber <= NumberOfPlayers; playerNumber++)
             {
-                _tournament.AddDude(new Dude(string.Format("Dude{0}", dudeNumber)));
+                _tournament.AddPlayer(new Player(string.Format("Dude{0}", playerNumber)));
             }
 
             var tournamentSvc = new TournamentService();
@@ -33,14 +33,14 @@ namespace GameSketchTest
                 (gameToWin = _tournament.Games().Where(game => game.IsInProgress()).FirstOrDefault()))
             {
                 winner = (winner == 0 ? 1 : 0);
-                _tournament = tournamentSvc.GameWon(_tournament, gameToWin, gameToWin.Dudes()[winner]);
+                _tournament = tournamentSvc.GameWon(_tournament, gameToWin, gameToWin.Players()[winner]);
             }
         }
 
         [TestMethod]
         public void ShouldHaveHadOneLessGameThenNumberOfPlayers()
         {
-            _tournament.Games().Count.Should().Be(NumberOfDudes - 1);
+            _tournament.Games().Count.Should().Be(NumberOfPlayers - 1);
         }
 
         [TestMethod]

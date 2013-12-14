@@ -8,29 +8,29 @@ using System.Linq;
 namespace GameSketchTest
 {
     [TestClass]
-    public class WhenTheGameHasAWinnerInATournamentWithTwoDudes
+    public class WhenTheGameHasAWinnerInATournamentWithTwoPlayers
     {
-        private List<Dude> _dudes = new List<Dude>{
-            new Dude("Dude1"),
-            new Dude("Dude2")};
+        private List<Player> _players = new List<Player>{
+            new Player("Dude1"),
+            new Player("Dude2")};
 
-        private Dude _wonDude;
+        private Player _wonPlayer;
         private Game _game;
         private Tournament _tournament;
 
-        public WhenTheGameHasAWinnerInATournamentWithTwoDudes()
+        public WhenTheGameHasAWinnerInATournamentWithTwoPlayers()
         {
             _tournament = new Tournament();
-            _tournament.AddDude(_dudes[0]);
-            _tournament.AddDude(_dudes[1]);
+            _tournament.AddPlayer(_players[0]);
+            _tournament.AddPlayer(_players[1]);
 
-            _game = new Game(_dudes);
+            _game = new Game(_players);
 
             _tournament.AddGame(_game);
 
-            _wonDude = _game.Dudes()[0];
+            _wonPlayer = _game.Players()[0];
 
-            _tournament = new TournamentService().GameWon(_tournament, _game, _wonDude);
+            _tournament = new TournamentService().GameWon(_tournament, _game, _wonPlayer);
         }
 
         [TestMethod]
@@ -42,13 +42,13 @@ namespace GameSketchTest
         [TestMethod]
         public void TheGameShouldHaveAWinner()
         {
-            _game.Winner().Should().Be(_wonDude);
+            _game.Winner().Should().Be(_wonPlayer);
         }
 
         [TestMethod]
         public void TheTournamentShouldHaveAWinner()
         {
-            _tournament.Winner().Should().Be(_wonDude);
+            _tournament.Winner().Should().Be(_wonPlayer);
         }
 
         [TestMethod]
