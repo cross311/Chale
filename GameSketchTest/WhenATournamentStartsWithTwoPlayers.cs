@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GameSketch;
 using FluentAssertions;
+using GameDataLayer;
 
 namespace GameSketchTest
 {

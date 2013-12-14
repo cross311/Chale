@@ -64,6 +64,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GameDataLayer\GameDataLayer.csproj">
+      <Project>{5863a927-fbed-4cbe-8e3b-2ede7bd00855}</Project>
+      <Name>GameDataLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GameSketch\GameSketch.csproj">
       <Project>{3c42cf12-ae95-48d7-b54c-48151099c925}</Project>
       <Name>GameSketch</Name>
