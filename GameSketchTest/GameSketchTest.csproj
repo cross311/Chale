@@ -38,6 +38,9 @@
     <Reference Include="FluentAssertions">
       <HintPath>..\packages\FluentAssertions.2.1.0.0\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.2.1312.1416\lib\net40\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
@@ -55,6 +58,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="WhenATournamentStarts.cs" />
     <Compile Include="WhenALargeOddTournamentCompletes.cs" />
     <Compile Include="WhenAGameHasAWinnerInATournamentWithFourPlayers.cs" />
     <Compile Include="WhenTheGameHasAWinnerInATournamentWithTwoPlayers.cs" />

@@ -13,6 +13,20 @@ namespace GameDataLayer
             this.Games = new List<Game>();
         }
 
+        public Tournament(
+            string name,
+            string description,
+            DateTime startDate,
+            IList<Player> players,
+            IList<Game> games)
+        {
+            this.Name = name;
+            this.Description = description;
+            this.StartDate = startDate;
+            this.Players = players ?? new List<Player>();
+            this.Games = games ?? new List<Game>();
+        }
+
         [Key()]
         public virtual Int32 Id { get; set; }
 

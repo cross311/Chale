@@ -4,6 +4,7 @@ using GameSketch;
 using FluentAssertions;
 using System.Linq;
 using GameDataLayer;
+using Moq;
 
 namespace GameSketchTest
 {
@@ -16,15 +17,20 @@ namespace GameSketchTest
             new Player("Dude3")};
 
         private Tournament _tournament;
+        private Mock<IRepository<Tournament>> _MockRepository;
 
         public WhenATournamentStartsWithThreePlayers()
         {
+
             _tournament = new Tournament();
             _tournament.AddPlayer(_players[0]);
             _tournament.AddPlayer(_players[1]);
             _tournament.AddPlayer(_players[2]);
 
-            _tournament = new TournamentService().Start(_tournament);
+            _MockRepository = new Mock<IRepository<Tournament>>();
+            _MockRepository.Setup(_ => _.Save(It.IsAny<Tournament>())).Returns(_tournament);
+
+            _tournament = new TournamentService(_MockRepository.Object).Start(_tournament);
         }
 
         [TestMethod]

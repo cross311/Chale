@@ -5,6 +5,7 @@ using FluentAssertions;
 using System.Collections.Generic;
 using System.Linq;
 using GameDataLayer;
+using Moq;
 
 namespace GameSketchTest
 {
@@ -20,6 +21,7 @@ namespace GameSketchTest
         private Game _wonGame;
         private Game _secondGame;
         private Tournament _tournament;
+        private Mock<IRepository<Tournament>> _MockRepository;
 
         public WhenTheFirstGameHasAWinnerInATournamentWithThreePlayers()
         {
@@ -36,7 +38,9 @@ namespace GameSketchTest
 
             _wonPlayer = _wonGame.Players[0];
 
-            _tournament = new TournamentService().GameWon(_tournament, _wonGame, _wonPlayer);
+            _MockRepository = new Mock<IRepository<Tournament>>();
+
+            _tournament = new TournamentService(_MockRepository.Object).GameWon(_tournament, _wonGame, _wonPlayer);
         }
 
         [TestMethod]

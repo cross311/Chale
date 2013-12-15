@@ -11,6 +11,12 @@ namespace GameSketch
     public class TournamentService
     {
         const int NumberOfPlayersPerGame = 2;
+        readonly IRepository<Tournament> _tournamentRepo;
+
+        public TournamentService(IRepository<Tournament> tournamentRepo)
+        {
+            this._tournamentRepo = tournamentRepo;
+        }
 
         public Tournament Start(Tournament tournament)
         {
@@ -20,7 +26,9 @@ namespace GameSketch
             {
                 tournament.AddGame(new Game(players.Skip(gameNumber * NumberOfPlayersPerGame).Take(NumberOfPlayersPerGame)));
             }
-            return tournament;
+
+            var result = _tournamentRepo.Save(tournament);
+            return result;
         }
 
         public Tournament GameWon(Tournament tournament, Game wonGame, Player playerWhoWon)
