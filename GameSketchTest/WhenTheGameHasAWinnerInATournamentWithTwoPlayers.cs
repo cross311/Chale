@@ -4,6 +4,7 @@ using GameSketch;
 using FluentAssertions;
 using System.Collections.Generic;
 using System.Linq;
+using GameDataLayer;
 
 namespace GameSketchTest
 {
@@ -28,7 +29,7 @@ namespace GameSketchTest
 
             _tournament.AddGame(_game);
 
-            _wonPlayer = _game.Players()[0];
+            _wonPlayer = _game.Players[0];
 
             _tournament = new TournamentService().GameWon(_tournament, _game, _wonPlayer);
         }
@@ -42,13 +43,13 @@ namespace GameSketchTest
         [TestMethod]
         public void TheGameShouldHaveAWinner()
         {
-            _game.Winner().Should().Be(_wonPlayer);
+            _game.Winner.Should().Be(_wonPlayer);
         }
 
         [TestMethod]
         public void TheTournamentShouldHaveAWinner()
         {
-            _tournament.Winner().Should().Be(_wonPlayer);
+            _tournament.Winner.Should().Be(_wonPlayer);
         }
 
         [TestMethod]

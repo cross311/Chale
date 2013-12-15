@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GameSketch;
 using FluentAssertions;
 using System.Linq;
+using GameDataLayer;
 
 namespace GameSketchTest
 {
@@ -29,31 +30,31 @@ namespace GameSketchTest
         [TestMethod]
         public void ShouldBeTwoGames()
         {
-            _tournament.Games().Count.Should().Be(2);
+            _tournament.Games.Count.Should().Be(2);
         }
 
         [TestMethod]
         public void OneGameShouldBeOpen()
         {
-            _tournament.Games().Should().Contain((game) => game.IsOpen());
+            _tournament.Games.Should().Contain((game) => game.IsOpen());
         }
 
         [TestMethod]
         public void OneGameShouldBeInProgress()
         {
-            _tournament.Games().Should().Contain((game) => game.IsInProgress());
+            _tournament.Games.Should().Contain((game) => game.IsInProgress());
         }
 
         [TestMethod]
         public void OneGameShouldNotBeInProgress()
         {
-            _tournament.Games().Where(game => !game.IsInProgress()).Count().Should().Be(1);
+            _tournament.Games.Where(game => !game.IsInProgress()).Count().Should().Be(1);
         }
 
         [TestMethod]
         public void TwoGamesShouldNotBeCompleted()
         {
-            _tournament.Games().Where(game => !game.IsCompleted()).Count().Should().Be(2);
+            _tournament.Games.Where(game => !game.IsCompleted()).Count().Should().Be(2);
         }
     }
 }

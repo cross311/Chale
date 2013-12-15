@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GameSketch;
 using FluentAssertions;
+using GameDataLayer;
 
 namespace GameSketchTest
 {
@@ -23,13 +24,13 @@ namespace GameSketchTest
         [TestMethod]
         public void ShouldHaveOneGame()
         {
-            _tournament.Games().Count.Should().Be(1);
+            _tournament.Games.Count.Should().Be(1);
         }
 
         [TestMethod]
         public void GameShouldHaveTwoDudes()
         {
-            _tournament.Games()[0].Players().Should().Contain(_players[0]).And.Contain(_players[1]);
+            _tournament.Games[0].Players.Should().Contain(_players[0]).And.Contain(_players[1]);
         }
     }
 }

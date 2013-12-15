@@ -1,36 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GameDataLayer
 {
-    public interface ITournamentRepo
+    public interface IRepository<T>
     {
-        Tournament Get(Guid id);
+        IQueryable<T> Get { get; }
 
-        IList<Tournament> Get();
-
-        bool Save(Tournament tournament);
-    }
-
-    public interface IGameRepo
-    {
-        Game Get(Guid id);
-
-        IList<Game> GetByTournament(Guid tournamentId);
-
-        bool Save(Game game);
-
-        bool AddPlayer(Game game, Player player);
-    }
-
-    public interface IPlayerRepo
-    {
-        Player Get(Guid id);
-
-        IList<Player> GetByTournament(Guid tournamentId);
-
-        IList<Player> GetByGame(Guid gameId);
-
-        bool Save(Player player);
+        T Save(T value);
     }
 }
