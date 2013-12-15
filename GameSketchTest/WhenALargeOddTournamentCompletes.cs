@@ -3,7 +3,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GameSketch;
 using System.Linq;
 using FluentAssertions;
-using Moq;
 
 namespace GameSketchTest
 {
@@ -14,7 +13,6 @@ namespace GameSketchTest
 
         private int NumberOfDudes = 49;
         private Tournament _tournament;
-        private Mock<IRepository<Tournament>> _MockRepository;
 
         public WhenALargeOddTournamentCompletes()
         {
@@ -25,10 +23,7 @@ namespace GameSketchTest
                 _tournament.AddDude(new Dude(string.Format("Dude{0}", dudeNumber)));
             }
 
-            _MockRepository = new Mock<IRepository<Tournament>>();
-
-
-            var tournamentSvc = new TournamentService(_MockRepository.Object);
+            var tournamentSvc = new TournamentService();
 
             _tournament = tournamentSvc.Start(_tournament);
 

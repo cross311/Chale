@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
 
 namespace GameSketch
 {
@@ -14,9 +13,6 @@ namespace GameSketch
         {
             this._dudes = dudes.ToList();
         }
-
-        [Key()]
-        public Int32 GameId { get; internal set;}
 
         private List<Dude> _dudes { get; set; }
         private Dude _winner { get; set; }
@@ -68,9 +64,6 @@ namespace GameSketch
             this._name = name;
         }
 
-        [Key()]
-        public Int32 DudeId { get; internal set; }
-
         public string Name()
         {
             return _name;
@@ -90,9 +83,6 @@ namespace GameSketch
             _dudes = new List<Dude>();
             _games = new List<Game>();
         }
-
-        [Key()]
-        public Int32 TournamentId { get; internal set; }
 
         public void AddDude(Dude dude)
         {
@@ -134,13 +124,6 @@ namespace GameSketch
     {
         const int NumberOfDudesPerGame = 2;
 
-        private readonly IRepository<Tournament> m_Repository;
-
-        public TournamentService(IRepository<Tournament> repo)
-        {
-            m_Repository = repo;
-        }
-
         public Tournament Start(Tournament tournament)
         {
             var dudes = tournament.Dudes();
@@ -149,10 +132,7 @@ namespace GameSketch
             {
                 tournament.AddGame(new Game(dudes.Skip(gameNumber * NumberOfDudesPerGame).Take(NumberOfDudesPerGame)));
             }
-
-            var result = m_Repository.Save(tournament);
-
-            return result;
+            return tournament;
         }
 
         public Tournament GameWon(Tournament tournament, Game wonGame, Dude dudeWhoWon)
