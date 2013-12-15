@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GameSketch;
 using FluentAssertions;
+using Moq;
 
 namespace GameSketchTest
 {
@@ -10,6 +11,7 @@ namespace GameSketchTest
     {
         private Tournament _tournament;
         private Dude[] _dudes = new Dude[] { new Dude("Dude1"), new Dude("Dude2") };
+        private Mock<IRepository<Tournament>> _MockRepository;
         
 
         public WhenATournamentStartsWithTwoDudes()
@@ -17,7 +19,10 @@ namespace GameSketchTest
             _tournament = new Tournament();
             _tournament.AddDude(_dudes[0]);
             _tournament.AddDude(_dudes[1]);
-            _tournament = new TournamentService().Start(_tournament);
+
+            _MockRepository = new Mock<IRepository<Tournament>>();
+
+            _tournament = new TournamentService(_MockRepository.Object).Start(_tournament);
         }
 
         [TestMethod]
