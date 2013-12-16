@@ -8,7 +8,7 @@
         static void Main(string[] args)
         {
             var uri =
-                new Uri("http://localhost:8080/nancy/");
+                new Uri("http://localhost:8080/chale/");
 
             using (var host = new NancyHost(uri))
             {

@@ -1,0 +1,5 @@
+﻿@Master['_Layout.sshtml']
+
+@Section['Content']
+<p>index.sshtml Says Hello</p>
+@EndSection
