@@ -1,6 +1,8 @@
 
 install templates
 
+## Self Hosting
+
 Just runing Nancy I get an error: Nancy.Hosting.Self.AutomaticUrlReservationCreationFailureException
 
 Must run netsh commands in As Administrator cmd.exe
@@ -17,3 +19,7 @@ Must create a IRootPathProvider and a DefaultNancyBootstrapper just to get teh d
 Razor, hhahahah https://groups.google.com/forum/#!topic/nancy-web-framework/afXvZNND7wI
 
 Been about 1.5 hours to get a simple view and masterpage. grr
+
+## IIS
+
+So far my choice of poison.

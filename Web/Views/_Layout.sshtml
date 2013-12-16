@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <title>Hello World</title>
+	<link href="@Path['~/Content/Css/master.css']" media="all" rel="stylesheet" type="text/css">
 </head>
 <body>
     <p>Masterpage.sshtml says hello</p>
