@@ -33,8 +33,8 @@ namespace GameSketchTest
             _tournament.AddPlayer(_players[2]);
             _tournament.AddPlayer(_players[3]);
 
-            _wonGame = new Game(_players.Take(2));
-            var secondGame = new Game(_players.Skip(2).Take(2));
+            _wonGame = new Game(1, _players.Take(2));
+            var secondGame = new Game(1, _players.Skip(2).Take(2));
 
             _tournament.AddGame(_wonGame);
             _tournament.AddGame(secondGame);

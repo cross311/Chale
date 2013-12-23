@@ -59,6 +59,11 @@ namespace GameDataLayer
         {
             return Winner != null;
         }
+
+        public Game AddOnHoldGame(Game wonGame)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public partial class Player
@@ -79,15 +84,20 @@ namespace GameDataLayer
     public partial class Game
     {
         public Game()
-            : this(new List<Player>()) { }
+            : this(1) { }
 
-        public Game(IEnumerable<Player> players)
+        public Game(int level)
+            : this(level, new List<Player>()) { }
+
+        public Game(int level, IEnumerable<Player> players)
         {
             this.Players = players.ToList();
         }
 
         [Key()]
         public virtual Int32 Id { get; set; }
+
+        public int Level { get; set; }
 
         public virtual Player Winner { get; set; }
 

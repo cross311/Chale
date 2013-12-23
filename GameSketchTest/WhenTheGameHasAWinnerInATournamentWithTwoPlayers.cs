@@ -27,7 +27,7 @@ namespace GameSketchTest
             _tournament.AddPlayer(_players[0]);
             _tournament.AddPlayer(_players[1]);
 
-            _game = new Game(_players);
+            _game = new Game(1, _players);
 
             _tournament.AddGame(_game);
 
