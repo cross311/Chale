@@ -21,10 +21,17 @@ namespace GameSketch
         public Tournament Start(Tournament tournament)
         {
             var players = tournament.Players;
-            var numberOfGames = NumberOfGamesForNumberOfDudes(NumberOfPlayersPerGame, players.Count);
+            var numberOfGames = NumberOfFullGamesForNumberOfDudes(NumberOfPlayersPerGame, players.Count);
+            var startingLevel = tournament.CurrentLevel() + 1;
             for (int gameNumber = 0; gameNumber < numberOfGames; gameNumber++)
             {
-                tournament.AddGame(new Game(1, players.Skip(gameNumber * NumberOfPlayersPerGame).Take(NumberOfPlayersPerGame)));
+                tournament.AddGame(new Game(startingLevel, players.Skip(gameNumber * NumberOfPlayersPerGame).Take(NumberOfPlayersPerGame)));
+            }
+
+            if (ShouldStartWithOpenGame(NumberOfPlayersPerGame, players.Count))
+            {
+                var openGamesLevel = startingLevel + 1;
+                tournament.AddGame(new Game(openGamesLevel, players.Skip(numberOfGames * NumberOfPlayersPerGame).Take(NumberOfPlayersPerGame)));
             }
 
             var result = _tournamentRepo.Save(tournament);
@@ -128,9 +135,13 @@ namespace GameSketch
             return false;
         }
 
-        private int NumberOfGamesForNumberOfDudes(int numberOfPlayersPerGame, int numberOfPlayers)
+        private int NumberOfFullGamesForNumberOfDudes(int numberOfPlayersPerGame, int numberOfPlayers)
         {
-            return (int)Math.Ceiling((double)numberOfPlayers / (double)numberOfPlayersPerGame);
+            return numberOfPlayers / numberOfPlayersPerGame;
+        }
+        private bool ShouldStartWithOpenGame(int numberOfPlayersPerGame, int numberOfPlayers)
+        {
+            return (numberOfPlayers % numberOfPlayersPerGame) != 0;
         }
 
         private bool IsThereALaggingGame(int laggingLevel, IEnumerable<Game> games)

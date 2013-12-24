@@ -46,6 +46,12 @@ namespace GameSketchTest
         }
 
         [TestMethod]
+        public void OpenGameShouldBeForTheNextLevel()
+        {
+            _tournament.Games.Single(game => game.IsOpen()).Level.Should().Be(2);
+        }
+
+        [TestMethod]
         public void OneGameShouldBeInProgress()
         {
             _tournament.Games.Should().Contain((game) => game.IsInProgress());
