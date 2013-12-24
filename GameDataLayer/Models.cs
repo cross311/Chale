@@ -30,7 +30,7 @@ namespace GameDataLayer
         }
 
         [Key()]
-        public virtual Int32 Id { get; set; }
+        public virtual Int32 TournamentId { get; set; }
 
         public virtual string Name { get; set; }
 
@@ -44,6 +44,7 @@ namespace GameDataLayer
 
         public virtual IList<Game> OnHoldGames { get; protected set; }
 
+        public Int32 WinnerId { get; set; }
         public virtual Player Winner { get; set; }
 
         public Player AddPlayer(Player player)
@@ -95,10 +96,11 @@ namespace GameDataLayer
         }
 
         [Key()]
-        public virtual Int32 Id { get; set; }
+        public virtual Int32 PlayerId { get; set; }
 
         public virtual string Name { get; set; }
 
+        public Int32 TournamentId { get; set; }
         public virtual Tournament Tournament { get; set; }
     }
 
@@ -117,12 +119,16 @@ namespace GameDataLayer
         }
 
         [Key()]
-        public virtual Int32 Id { get; set; }
+        public virtual Int32 GameId { get; set; }
 
         public int Level { get; set; }
 
+
+        public Int32 WinnerId { get; set; }
         public virtual Player Winner { get; set; }
 
+
+        public Int32 TournamentId { get; set; }
         public virtual Tournament Tournament { get; set; }
 
         public virtual IList<Player> Players { get; protected set; }
