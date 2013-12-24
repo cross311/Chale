@@ -10,7 +10,7 @@ using FluentAssertions;
 namespace GameSketchTest
 {
     [TestClass]
-    public class WhenAGameIsStillInProgressTwoLevelsBackAndTheOthersAreWon
+    public class WhenALaggingGameIsStillInProgressAndOnTrackGamesAreWon
     {
         private Tournament _tournament;
         private TournamentService _tournamentService;
@@ -36,7 +36,7 @@ namespace GameSketchTest
 
         private Game _NotPlayedGame;
 
-        public WhenAGameIsStillInProgressTwoLevelsBackAndTheOthersAreWon()
+        public WhenALaggingGameIsStillInProgressAndOnTrackGamesAreWon()
         {
             _tournament = new Tournament();
             _MockRepository = new Mock<IRepository<Tournament>>();
@@ -58,21 +58,30 @@ namespace GameSketchTest
         }
 
         [TestMethod]
-        public void ShouldBeOnlyOneGameInProgress()
+        public void NextLevelGamesShouldNotBeInProgress()
+        {
+            var gamesInProgress = _tournament.Games
+                .Where(g => g.IsInProgress() && g.Level > _NotPlayedGame.Level);
+
+            gamesInProgress.Should().BeEmpty();
+        }
+
+        [TestMethod]
+        public void OnTrackGamesShouldBeOnHold()
+        {
+            var gamesThatShouldBeOnHold = _tournament.Games
+                .Where(g => g.IsCompleted() && g.Level == 2);
+
+            gamesThatShouldBeOnHold.Should().BeEquivalentTo(_tournament.OnHoldGames);
+        }
+
+        [TestMethod]
+        public void GameFromLaggingLevelShouldBeTheOnlyGameInProgress()
         {
             var gamesInProgress = _tournament.Games
                 .Where(g => g.IsInProgress());
 
-            gamesInProgress.Count().Should().Be(1);
-        }
-
-        [TestMethod]
-        public void GameFromLevel1ShouldBeTheGameInProgress()
-        {
-            var gameInProgress = _tournament.Games
-                .Where(g => g.IsInProgress()).First();
-
-            gameInProgress.Should().Be(_NotPlayedGame);
+            gamesInProgress.SingleOrDefault().Should().Be(_NotPlayedGame);
         }
 
         [TestMethod]

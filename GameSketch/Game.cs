@@ -34,23 +34,18 @@ namespace GameSketch
         public Tournament GameWon(Tournament tournament, Game wonGame, Player playerWhoWon)
         {
             wonGame.Winner = playerWhoWon;
-            var openGame = tournament.Games.FirstOrDefault(game => game.IsOpen());
-            if (openGame != null)
-                openGame.AddPlayer(playerWhoWon);
-            else if (tournament.Games.Any(game => game.IsInProgress()))
-                tournament.AddGame(new Game(wonGame.Level + 1, new Player[] { playerWhoWon }));
-            else if (tournament.Games.All(game => game.IsCompleted()))
-                tournament.Winner = playerWhoWon;
 
             return GameWonLogic(tournament, wonGame, playerWhoWon);
         }
 
         private Tournament GameWonLogic(Tournament tournament, Game wonGame, Player playerWhoWon)
         {
-            if(!FilledInOpenGame(tournament, playerWhoWon))
-                if(!PutTournamentOnHoldForLaggingGame(tournament, wonGame, playerWhoWon))
-                    if(!CreatedOpenGame(tournament, wonGame, playerWhoWon))
-                        TournamentMarkedAsOver(tournament, playerWhoWon);
+            if (!FilledInOpenGame(tournament, playerWhoWon))
+                if (!PutTournamentOnHoldForLaggingGame(tournament, wonGame, playerWhoWon))
+                    if (!LeftTournamentOnHoldBecauseOfAnotherLaggingGame(tournament, wonGame, playerWhoWon))
+                        if (!ResumedOnHoldTournamentDueToFinalLaggingGameFinishing(tournament, wonGame, playerWhoWon))
+                            if (!CreatedOpenGame(tournament, wonGame, playerWhoWon))
+                                TournamentMarkedAsOver(tournament, playerWhoWon);
             return tournament;
         }
 
@@ -65,15 +60,51 @@ namespace GameSketch
 
         private bool PutTournamentOnHoldForLaggingGame(Tournament tournament, Game wonGame, Player playerWhoWon)
         {
-            var lowestLevelInProgressGame = tournament.Games
-                .Where(game => game.IsInProgress())
-                .OrderBy(game => game.Level)
-                .FirstOrDefault();
+            if (IsThereALaggingGame(wonGame.Level - 1, tournament.Games))
+            {
+                wonGame = tournament.AddOnHoldGame(wonGame);
+                return true;
+            }
+            return false;
+        }
 
-            if (lowestLevelInProgressGame == null && lowestLevelInProgressGame.Level >= (wonGame.Level - 3))
-                return false;
+        private bool LeftTournamentOnHoldBecauseOfAnotherLaggingGame(Tournament tournament, Game wonGame, Player playerWhoWon)
+        {
+            if (!tournament.IsOnHold()) return false;
+            if (IsThereALaggingGame(tournament.CurrentLevel() - 1, tournament.Games.Where(g => g != wonGame)))
+            {
+                wonGame = tournament.AddOnHoldGame(wonGame);
+                return true;
+            }
+            return false;
+        }
 
-            wonGame = tournament.AddOnHoldGame(wonGame);
+        private bool ResumedOnHoldTournamentDueToFinalLaggingGameFinishing(Tournament tournament, Game wonGame, Player playerWhoWon)
+        {
+            if (!tournament.IsOnHold()) return false;
+            var wonGamesOnHold = tournament.OnHoldGames;
+            wonGamesOnHold.Add(wonGame);
+
+            var wonGamesFromLowestToHighestLevel = wonGamesOnHold.OrderBy(g => g.Level).ToList();
+            var highestGameIndex = wonGamesFromLowestToHighestLevel.Count - 1;
+            var newGamesLevel = wonGamesFromLowestToHighestLevel[highestGameIndex].Level + 1;
+
+            for (int lowerLevelGameIndex = 0; lowerLevelGameIndex <= highestGameIndex / 2; lowerLevelGameIndex++)
+            {
+                var higherLevelGameIndex = highestGameIndex - lowerLevelGameIndex;
+                var higherLevelWinner = wonGamesFromLowestToHighestLevel[highestGameIndex].Winner;
+                var lowerLevelWinner = wonGamesFromLowestToHighestLevel[lowerLevelGameIndex].Winner;
+                if (higherLevelGameIndex != lowerLevelGameIndex)
+                {
+                    tournament.AddGame(new Game(newGamesLevel, new Player[] { higherLevelWinner, lowerLevelWinner }));
+                }
+                else
+                {
+                    tournament.AddGame(new Game(newGamesLevel, new Player[] { lowerLevelWinner }));
+                }
+            }
+            tournament.MarkAsResumed();
+
             return true;
         }
 
@@ -100,6 +131,21 @@ namespace GameSketch
         private int NumberOfGamesForNumberOfDudes(int numberOfPlayersPerGame, int numberOfPlayers)
         {
             return (int)Math.Ceiling((double)numberOfPlayers / (double)numberOfPlayersPerGame);
+        }
+
+        private bool IsThereALaggingGame(int laggingLevel, IEnumerable<Game> games)
+        {
+            var lowestLevelInProgressGame = games
+                .Where(game => game.IsInProgress())
+                .OrderBy(game => game.Level)
+                .FirstOrDefault();
+
+            return lowestLevelInProgressGame != null && IsLaggingGame(laggingLevel, lowestLevelInProgressGame);
+        }
+
+        private bool IsLaggingGame(int laggingLevel, Game suspectedLaggingGame)
+        {
+            return suspectedLaggingGame.Level <= laggingLevel;
         }
     }
 }

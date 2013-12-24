@@ -35,7 +35,8 @@ namespace GameSketchTest
             Game gameToWin;
             int winner = 0;
             while (null !=
-                (gameToWin = _tournament.Games.Where(game => game.IsInProgress()).FirstOrDefault()))
+                (gameToWin = _tournament.Games.Where(game => game.IsInProgress()).FirstOrDefault())
+                && _tournament.Games.Count <= NumberOfPlayers)
             {
                 winner = (winner == 0 ? 1 : 0);
                 _tournament = tournamentSvc.GameWon(_tournament, gameToWin, gameToWin.Players[winner]);

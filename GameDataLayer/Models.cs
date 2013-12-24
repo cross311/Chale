@@ -11,6 +11,7 @@ namespace GameDataLayer
         {
             this.Players = new List<Player>();
             this.Games = new List<Game>();
+            this.OnHoldGames = new List<Game>();
         }
 
         public Tournament(
@@ -25,6 +26,7 @@ namespace GameDataLayer
             this.StartDate = startDate;
             this.Players = players ?? new List<Player>();
             this.Games = games ?? new List<Game>();
+            this.OnHoldGames = new List<Game>();
         }
 
         [Key()]
@@ -39,6 +41,8 @@ namespace GameDataLayer
         public virtual IList<Player> Players { get; protected set; }
 
         public virtual IList<Game> Games { get; protected set; }
+
+        public virtual IList<Game> OnHoldGames { get; protected set; }
 
         public virtual Player Winner { get; set; }
 
@@ -62,7 +66,24 @@ namespace GameDataLayer
 
         public Game AddOnHoldGame(Game wonGame)
         {
-            throw new NotImplementedException();
+            OnHoldGames.Add(wonGame);
+            return wonGame;
+        }
+
+        public bool IsOnHold()
+        {
+            return OnHoldGames.Any();
+        }
+
+        public int CurrentLevel()
+        {
+            var highestLevelGame = Games.OrderByDescending(g => g.Level).FirstOrDefault();
+            return highestLevelGame != null? highestLevelGame.Level : 0;
+        }
+
+        public void MarkAsResumed()
+        {
+            this.OnHoldGames.Clear();
         }
     }
 
@@ -91,6 +112,7 @@ namespace GameDataLayer
 
         public Game(int level, IEnumerable<Player> players)
         {
+            this.Level = level;
             this.Players = players.ToList();
         }
 

@@ -58,7 +58,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="WhenAGameIsStillInProgressTwoLevelsBackAndTheOthersAreWon.cs" />
+    <Compile Include="WhenALaggingGameIsWonAfterOnTrackGamesAreWon.cs" />
+    <Compile Include="WhenALaggingGameIsStillInProgressAndOnTrackGamesAreWon.cs" />
     <Compile Include="WhenATournamentStarts.cs" />
     <Compile Include="WhenALargeOddTournamentCompletes.cs" />
     <Compile Include="WhenAGameHasAWinnerInATournamentWithFourPlayers.cs" />
