@@ -89,8 +89,8 @@ namespace GameSketch
         private bool ResumedOnHoldTournamentDueToFinalLaggingGameFinishing(Tournament tournament, Game wonGame, Player playerWhoWon)
         {
             if (!tournament.IsOnHold()) return false;
+            wonGame.OnHold = true;
             var wonGamesOnHold = tournament.OnHoldGames;
-            wonGamesOnHold.Add(wonGame);
 
             var wonGamesFromLowestToHighestLevel = wonGamesOnHold.OrderBy(g => g.Level).ToList();
             var highestGameIndex = wonGamesFromLowestToHighestLevel.Count - 1;
