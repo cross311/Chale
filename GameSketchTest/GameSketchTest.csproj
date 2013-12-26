@@ -58,6 +58,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="WhenATournamentIsCreated.cs" />
     <Compile Include="WhenALaggingGameIsWonAfterOnTrackGamesAreWon.cs" />
     <Compile Include="WhenALaggingGameIsStillInProgressAndOnTrackGamesAreWon.cs" />
     <Compile Include="WhenATournamentStarts.cs" />

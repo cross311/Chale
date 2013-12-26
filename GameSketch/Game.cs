@@ -158,5 +158,17 @@ namespace GameSketch
         {
             return suspectedLaggingGame.Level <= laggingLevel;
         }
+
+        public Tournament Create(string name, string description)
+        {
+            var newTournament = new Tournament()
+            {
+                Name = name,
+                Description = description
+            };
+
+            newTournament = _tournamentRepo.Save(newTournament);
+            return newTournament;
+        }
     }
 }

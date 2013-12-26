@@ -36,7 +36,7 @@ namespace GameDataLayer
 
         public string Description { get; set; }
 
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
         [InverseProperty("Tournament")]
         public virtual List<Player> Players { get; protected set; }

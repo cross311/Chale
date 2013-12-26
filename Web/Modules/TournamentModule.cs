@@ -65,14 +65,9 @@ namespace Web.Modules
         private dynamic Create(dynamic _)
         {
             var createViewModel = this.Bind<TournamentCreateModel>();
-            var newTournament = new Tournament()
-            {
-                Name = createViewModel.Name,
-                Description = createViewModel.Description,
-                StartDate = DateTime.Now.AddDays(7)
-            };
 
-            newTournament = _repo.Save(newTournament);
+            var newTournament = _service.Create(createViewModel.Name, createViewModel.Description);
+
             if (this.Request.Headers.Accept.Any(a => a.Item1.Contains("html")))
                 return Response.AsRedirect("/tournaments/");
 
