@@ -1,4 +1,4 @@
-﻿namespace Nancy.Web.Modules
+﻿namespace Web.Modules
 {
     using Nancy;
 

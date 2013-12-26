@@ -22,7 +22,7 @@ namespace GameDataLayer
 
         IQueryable<T> IRepository<T>.Get
         {
-            get { return _Context.Set<T>(); }
+            get { return _Context.Set<T>().Include("Players").Include("Games"); }
         }
 
         public T Save(T value)

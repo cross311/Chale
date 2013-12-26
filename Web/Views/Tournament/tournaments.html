@@ -1,0 +1,35 @@
+﻿@Master['layout']
+
+@Section['Content']
+<h2>Welcome To Chale's Open Tournaments!</h2>
+<p>Todo: Fill In information</p>
+<ul class="tournament-list">
+    @Each.Tournaments
+    <li>
+        <h3>@Current.Name</h3>
+        <p>@Current.Description</p>
+        <ul class="tournament-stats">
+            <li><span>Players</span> @Current.NumberOfPlayers</li>
+            <li><span>Games</span> @Current.NumberOfGames</li>
+        </ul>
+    </li>
+    @EndEach
+    <li class="create">
+        <form action="@Path['~/Tournaments/']" method="post" role="form">
+            <div class="form-group">
+                <label for="tournamentName">Name</label>
+                <input type="text" class="form-control" id="tournamentName" name="Name" placeholder="Enter name">
+            </div>
+            <div class="form-group">
+                <label for="tournamentDescription">Description</label>
+                <textarea class="form-control" id="tournamentDescription" name="Description" placeholder="Enter description" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default">Create Tournament</button>
+                </div>
+            </div>
+        </form>
+    </li>
+</ul>
+@EndSection

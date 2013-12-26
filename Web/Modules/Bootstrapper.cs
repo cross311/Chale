@@ -1,4 +1,4 @@
-﻿namespace Nancy.Web
+﻿namespace Web
 {
     using GameDataLayer;
     using Nancy;
