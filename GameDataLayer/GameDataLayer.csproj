@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ITournamentContext.cs" />
     <Compile Include="Migrations\201312251959067_Initial.cs" />
     <Compile Include="Migrations\201312251959067_Initial.Designer.cs">
       <DependentUpon>201312251959067_Initial.cs</DependentUpon>
