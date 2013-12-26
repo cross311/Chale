@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using Nancy;
 using Nancy.ModelBinding;
+using Nancy.Extensions;
 
 namespace Web.Modules
 {
@@ -32,6 +33,7 @@ namespace Web.Modules
         {
             var viewmodel = new TournamentsModel()
             {
+                CreateUri = Context.ToFullPath("/tournaments/create"),
                 Tournaments = _repo.Get.Select(t => new TournamentModel
                     {
                         Id = t.TournamentId,
@@ -58,6 +60,8 @@ namespace Web.Modules
                         ).ToList()
                     }).ToList()
             };
+            var tournamentPath = Context.ToFullPath("/tournaments/");
+            viewmodel.Tournaments.ForEach(t => t.Uri = string.Format("{0}{1}", tournamentPath, t.Id));
 
             return viewmodel;
         }
@@ -84,12 +88,14 @@ namespace Web.Modules
 
     public class TournamentsModel
     {
+        public string CreateUri { get; set; }
         public List<TournamentModel> Tournaments { get; set; }
     }
 
     public class TournamentModel
     {
         public Int32 Id { get; set; }
+        public string Uri { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int NumberOfPlayers { get; set; }

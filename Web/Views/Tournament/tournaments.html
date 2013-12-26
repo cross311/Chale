@@ -6,7 +6,7 @@
 <ul class="tournament-list">
     @Each.Tournaments
     <li>
-        <h3>@Current.Name</h3>
+        <h3><a href="@Current.Uri">@Current.Name</a></h3>
         <p>@Current.Description</p>
         <ul class="tournament-stats">
             <li><span>Players</span> @Current.NumberOfPlayers</li>
@@ -15,5 +15,5 @@
     </li>
     @EndEach
 </ul>
-<a href="@Path['~/tournaments/create']" class="btn btn-default">Create Tournament</a>
+<a href="@Model.CreateUri" class="btn btn-default">Create Tournament</a>
 @EndSection
