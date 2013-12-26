@@ -1,0 +1,11 @@
+﻿@Master['layout']
+
+@Section['Content']
+<h2>Welcome To Chale!</h2>
+<h3><a href="@Model.Uri">@Model.Name</a></h3>
+<p>@Model.Description</p>
+<ul class="tournament-stats">
+    <li><span>Players</span> @Model.NumberOfPlayers</li>
+    <li><span>Games</span> @Model.NumberOfGames</li>
+</ul>
+@EndSection

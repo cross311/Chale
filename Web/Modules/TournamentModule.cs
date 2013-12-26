@@ -24,6 +24,14 @@ namespace Web.Modules
             Get["/"] = List;
             Get["/Create"] = _ => View["Create"];
             Post["/"] = Create;
+            Get["/{id:int}"] = Display;
+        }
+
+        private dynamic Display(dynamic arg)
+        {
+            Int32 id = arg.id;
+            var tournament = _repo.Get.SingleOrDefault(t => t.TournamentId == id);
+            return FillInUri(CreateTournamentModel(tournament));
         }
 
         private dynamic List(dynamic _)
@@ -34,36 +42,70 @@ namespace Web.Modules
             var viewmodel = new TournamentsModel()
             {
                 CreateUri = Context.ToFullPath("/tournaments/create"),
-                Tournaments = _repo.Get.Select(t => new TournamentModel
-                    {
-                        Id = t.TournamentId,
-                        Name = t.Name,
-                        Description = t.Description,
-                        NumberOfPlayers = t.Players.Count,
-                        Players = t.Players.Select(p =>
-                            new PlayerModel
-                            {
-                                Id = p.PlayerId,
-                                Name = p.Name,
-                                NumberOfWonGames = t.Games.Count(g => g.Winner != null && g.Winner == p)
-                            }
-                        ).ToList(),
-                        NumberOfGames = t.Games.Count,
-                        Games = t.Games.Select(g =>
-                            new GameModel
-                            {
-                                Id = g.GameId,
-                                PlayerIds = g.Players.Select(p =>
-                                    p.PlayerId).ToList(),
-                                WinningPlayerId = g.Winner != null ? g.Winner.PlayerId : -1
-                            }
-                        ).ToList()
-                    }).ToList()
+                Tournaments = _repo.Get.Select(tournament => new TournamentModel
+                {
+                    Id = tournament.TournamentId,
+                    Name = tournament.Name,
+                    Description = tournament.Description,
+                    NumberOfPlayers = tournament.Players.Count,
+                    Players = tournament.Players.Select(p =>
+                        new PlayerModel
+                        {
+                            Id = p.PlayerId,
+                            Name = p.Name,
+                            NumberOfWonGames = tournament.Games.Count(g => g.Winner != null && g.Winner == p)
+                        }
+                    ).ToList(),
+                    NumberOfGames = tournament.Games.Count,
+                    Games = tournament.Games.Select(g =>
+                        new GameModel
+                        {
+                            Id = g.GameId,
+                            PlayerIds = g.Players.Select(p =>
+                                p.PlayerId).ToList(),
+                            WinningPlayerId = g.Winner != null ? g.Winner.PlayerId : -1
+                        }
+                    ).ToList()
+                }).ToList()
             };
-            var tournamentPath = Context.ToFullPath("/tournaments/");
-            viewmodel.Tournaments.ForEach(t => t.Uri = string.Format("{0}{1}", tournamentPath, t.Id));
+            viewmodel.Tournaments.ForEach(t => FillInUri(t));
 
             return viewmodel;
+        }
+
+        private TournamentModel FillInUri(TournamentModel tournament)
+        {
+            tournament.Uri = string.Format("{0}{1}", Context.ToFullPath("/tournaments/"), tournament.Id);
+            return tournament;
+        }
+
+        private TournamentModel CreateTournamentModel(Tournament tournament)
+        {
+            return new TournamentModel
+            {
+                Id = tournament.TournamentId,
+                Name = tournament.Name,
+                Description = tournament.Description,
+                NumberOfPlayers = tournament.Players.Count,
+                Players = tournament.Players.Select(p =>
+                    new PlayerModel
+                    {
+                        Id = p.PlayerId,
+                        Name = p.Name,
+                        NumberOfWonGames = tournament.Games.Count(g => g.Winner != null && g.Winner == p)
+                    }
+                ).ToList(),
+                NumberOfGames = tournament.Games.Count,
+                Games = tournament.Games.Select(g =>
+                    new GameModel
+                    {
+                        Id = g.GameId,
+                        PlayerIds = g.Players.Select(p =>
+                            p.PlayerId).ToList(),
+                        WinningPlayerId = g.Winner != null ? g.Winner.PlayerId : -1
+                    }
+                ).ToList()
+            };
         }
 
         private dynamic Create(dynamic _)
