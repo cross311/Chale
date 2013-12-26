@@ -14,22 +14,6 @@
         </ul>
     </li>
     @EndEach
-    <li class="create">
-        <form action="@Path['~/Tournaments/']" method="post" role="form">
-            <div class="form-group">
-                <label for="tournamentName">Name</label>
-                <input type="text" class="form-control" id="tournamentName" name="Name" placeholder="Enter name">
-            </div>
-            <div class="form-group">
-                <label for="tournamentDescription">Description</label>
-                <textarea class="form-control" id="tournamentDescription" name="Description" placeholder="Enter description" rows="3"></textarea>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-default">Create Tournament</button>
-                </div>
-            </div>
-        </form>
-    </li>
 </ul>
+<a href="@Path['~/tournaments/create']" class="btn btn-default">Create Tournament</a>
 @EndSection

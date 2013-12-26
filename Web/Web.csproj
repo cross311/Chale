@@ -87,6 +87,9 @@
     <Content Include="Views\layout.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Views\Tournament\create.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Views\Tournament\tournaments.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -21,10 +21,14 @@ namespace Web.Modules
             this._service = service;
 
             Get["/"] = List;
+            Get["/Create"] = _ => View["Create"];
             Post["/"] = Create;
         }
 
         private dynamic List(dynamic _)
+        { return List(); }
+
+        private dynamic List()
         {
             var viewmodel = new TournamentsModel()
             {
@@ -69,6 +73,9 @@ namespace Web.Modules
             };
 
             newTournament = _repo.Save(newTournament);
+            if (this.Request.Headers.Accept.Any(a => a.Item1.Contains("html")))
+                return Response.AsRedirect("/tournaments/");
+
             return HttpStatusCode.NoContent;
         }
     }
