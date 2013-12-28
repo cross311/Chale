@@ -101,6 +101,8 @@
   <ItemGroup>
     <Compile Include="Modules\Bootstrapper.cs" />
     <Compile Include="Modules\IndexModule.cs" />
+    <Compile Include="Modules\GameModule.cs" />
+    <Compile Include="Modules\PlayerModule.cs" />
     <Compile Include="Modules\TournamentModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

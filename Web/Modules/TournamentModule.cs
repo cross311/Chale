@@ -22,7 +22,7 @@ namespace Web.Modules
             this._service = service;
 
             Get["/"] = List;
-            Get["/Create"] = _ => View["Create"];
+            Get["/create"] = _ => View["Create"];
             Post["/"] = Create;
             Get["/{id:int}"] = Display;
         }
