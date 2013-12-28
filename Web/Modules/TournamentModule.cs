@@ -76,6 +76,7 @@ namespace Web.Modules
         private TournamentModel FillInUri(TournamentModel tournament)
         {
             tournament.Uri = string.Format("{0}{1}", Context.ToFullPath("/tournaments/"), tournament.Id);
+            tournament.PlayersUri = string.Format("{0}{1}/players/", Context.ToFullPath("/tournaments/"), tournament.Id);
             return tournament;
         }
 
@@ -144,6 +145,8 @@ namespace Web.Modules
         public int NumberOfGames { get; set; }
         public List<PlayerModel> Players { get; set; }
         public List<GameModel> Games { get; set; }
+
+        public string PlayersUri { get; set; }
     }
 
     public class PlayerModel
@@ -151,6 +154,7 @@ namespace Web.Modules
         public Int32 Id { get; set; }
         public string Name { get; set; }
         public int NumberOfWonGames { get; set; }
+        public string Uri { get; set; }
     }
 
     public class GameModel

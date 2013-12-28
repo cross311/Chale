@@ -1,0 +1,16 @@
+﻿@Master['layout']
+
+@Section['Content']
+<h2>Welcome To Chale!</h2>
+<ul class="player-list">
+    @Each.Players
+    <li>
+        <h3><a href="@Current.Uri">@Model.Name</a></h3>
+        <ul class="player-stats">
+            <li><span>Won Games</span> @Current.NumberOfWonGames</li>
+        </ul>
+    </li>
+    @EndEach
+</ul>
+<a href="@Model.AddUri" class="btn btn-default">Add Player</a>
+@EndSection
