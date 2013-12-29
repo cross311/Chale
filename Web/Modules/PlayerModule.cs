@@ -12,7 +12,7 @@ namespace Web.Modules
 {
     public class PlayerModule : NancyModule
     {
-        
+
         private IRepository<Tournament> _repo;
         private TournamentService _service;
 
@@ -50,7 +50,7 @@ namespace Web.Modules
                             NumberOfWonGames = tournament.Games.Count(g => g.Winner != null && g.Winner == p)
                         }
                     ).ToList(),
-                AddUri = string.Format("{0}{1}/players/create", Context.ToFullPath("/tournaments/"), tournament.TournamentId),
+                AddUri = Context.ToFullPath(string.Format("/tournaments/{0}/players/create", tournament.TournamentId),
             };
             return playersModel;
         }
@@ -71,7 +71,18 @@ namespace Web.Modules
 
         private dynamic Display(dynamic arg)
         {
-            throw new NotImplementedException();
+            Tournament tournament = arg.tournament;
+            int playerId = arg.id;
+            Player player = tournament.Players.SingleOrDefault(p => p.PlayerId == playerId);
+            if (player == null) return new NotFoundResponse();
+
+            return new PlayerModel()
+            {
+                Id = player.PlayerId,
+                Name = player.Name,
+                NumberOfWonGames = player.WonGames.Count(),
+                Uri = Context.ToFullPath(string.Format("/tournaments/{0}/players/{1}", tournament.TournamentId, player.PlayerId))
+            };
         }
 
         private Nancy.Response TournamentBeforeFilter(NancyContext arg)

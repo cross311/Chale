@@ -100,9 +100,14 @@ namespace GameDataLayer
 
     public partial class Player
     {
-        public Player() { }
+        public Player()
+        {
+            Games = new List<Game>();
+            WonGames = new List<Game>();
+        }
 
         public Player(string name)
+            : this()
         {
             this.Name = name;
         }
