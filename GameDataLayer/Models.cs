@@ -49,6 +49,7 @@ namespace GameDataLayer
         public Player AddPlayer(Player player)
         {
             Players.Add(player);
+            player.Tournament = this;
             return player;
         }
 

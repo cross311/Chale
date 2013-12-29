@@ -22,7 +22,6 @@ namespace GameSketchTest
             _tournament.AddPlayer(_players[1]);
 
             _MockRepository = new Mock<IRepository<Tournament>>();
-            _MockRepository.Setup(_ => _.Save(It.IsAny<Tournament>())).Returns(_tournament);
 
             _tournament = new TournamentService(_MockRepository.Object).Start(_tournament);
         }
@@ -37,6 +36,12 @@ namespace GameSketchTest
         public void GameShouldHaveTwoDudes()
         {
             _tournament.Games[0].Players.Should().Contain(_players[0]).And.Contain(_players[1]);
+        }
+
+        [TestMethod]
+        public void SaveShouldHaveBeenCalled()
+        {
+            _MockRepository.Verify(_ => _.SaveChanges());
         }
     }
 }

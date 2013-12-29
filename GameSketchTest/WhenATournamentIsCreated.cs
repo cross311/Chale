@@ -10,6 +10,7 @@ namespace GameSketchTest
     [TestClass]
     public class WhenATournamentIsCreated
     {
+        private bool _AddCalled;
         private bool _SaveCalled;
         private TournamentService _service;
         private Mock<IRepository<Tournament>> _MockRepository;
@@ -22,10 +23,10 @@ namespace GameSketchTest
         {
             _SavedTournament = new Tournament();
             _MockRepository = new Mock<IRepository<Tournament>>();
-            _MockRepository.Setup(_ => _.Save(It.IsAny<Tournament>()))
+            _MockRepository.Setup(_ => _.AddNew(It.IsAny<Tournament>()))
                 .Callback<Tournament>((t) => {
                     _SavedTournament = t;
-                    _SaveCalled = true;
+                    _AddCalled = true;
                 });
 
             _service = new TournamentService(_MockRepository.Object);
@@ -55,9 +56,15 @@ namespace GameSketchTest
         }
 
         [TestMethod]
+        public void TournamentShouldHaveBeenAddedToRepository()
+        {
+            _AddCalled.Should().BeTrue();
+        }
+
+        [TestMethod]
         public void SaveShouldHaveBeenCalled()
         {
-            _SaveCalled.Should().BeTrue();
+            _MockRepository.Verify(_ => _.SaveChanges());
         }
     }
 }

@@ -21,18 +21,11 @@ namespace Web.Modules
             this._service = service;
 
             Get["/"] = List;
-            Get["/create"] = _ => View["Create"];
-            Post["/"] = Create;
             Get["/{id:int}"] = Display;
             Post["/winner"] = Winner;
         }
 
         private dynamic List(dynamic arg)
-        {
-            throw new NotImplementedException();
-        }
-
-        private dynamic Create(dynamic arg)
         {
             throw new NotImplementedException();
         }

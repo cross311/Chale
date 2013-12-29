@@ -34,15 +34,39 @@ namespace GameSketch
                 tournament.AddGame(new Game(openGamesLevel, players.Skip(numberOfGames * NumberOfPlayersPerGame).Take(NumberOfPlayersPerGame)));
             }
 
-            var result = _tournamentRepo.Save(tournament);
-            return result;
+            _tournamentRepo.SaveChanges();
+            return tournament;
         }
 
         public Tournament GameWon(Tournament tournament, Game wonGame, Player playerWhoWon)
         {
             wonGame.Winner = playerWhoWon;
 
-            return GameWonLogic(tournament, wonGame, playerWhoWon);
+            tournament = GameWonLogic(tournament, wonGame, playerWhoWon);
+
+            _tournamentRepo.SaveChanges();
+            return tournament;
+        }
+
+        public Tournament Create(string name, string description)
+        {
+            var newTournament = new Tournament()
+            {
+                Name = name,
+                Description = description
+            };
+
+            newTournament = _tournamentRepo.AddNew(newTournament);
+            _tournamentRepo.SaveChanges();
+            return newTournament;
+        }
+
+        public Player AddPlayer(Tournament tournament, Player newPlayer)
+        {
+            newPlayer = tournament.AddPlayer(newPlayer);
+            _tournamentRepo.SaveChanges();
+
+            return newPlayer;
         }
 
         private Tournament GameWonLogic(Tournament tournament, Game wonGame, Player playerWhoWon)
@@ -157,18 +181,6 @@ namespace GameSketch
         private bool IsLaggingGame(int laggingLevel, Game suspectedLaggingGame)
         {
             return suspectedLaggingGame.Level <= laggingLevel;
-        }
-
-        public Tournament Create(string name, string description)
-        {
-            var newTournament = new Tournament()
-            {
-                Name = name,
-                Description = description
-            };
-
-            newTournament = _tournamentRepo.Save(newTournament);
-            return newTournament;
         }
     }
 }

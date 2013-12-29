@@ -10,7 +10,6 @@ namespace GameSketchTest
     [TestClass]
     public class WhenATournamentStarts
     {
-        private bool _SaveCalled;
         private Tournament _tournament;
         private Mock<IRepository<Tournament>> _MockRepository;
 
@@ -22,16 +21,13 @@ namespace GameSketchTest
             _tournament.AddPlayer(new Player("barney"));
 
             _MockRepository = new Mock<IRepository<Tournament>>();
-
-            _MockRepository.Setup(_ => _.Save(It.Is((Tournament x) => x == _tournament))).Callback(() => _SaveCalled = true);
-
             _tournament = new TournamentService(_MockRepository.Object).Start(_tournament);
         }
 
         [TestMethod]
-        public void ItShouldBeSaved()
+        public void SaveShouldHaveBeenCalled()
         {
-            _SaveCalled.Should().BeTrue("Save() should have been called on the repository.");
+            _MockRepository.Verify(_ => _.SaveChanges());
         }
 
         // TODO: implement this test

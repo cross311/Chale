@@ -61,5 +61,11 @@ namespace GameSketchTest
         {
             _tournament.Games.Single(game => game.IsOpen()).Players.Should().Contain(_wonPlayer);
         }
+
+        [TestMethod]
+        public void SaveShouldHaveBeenCalled()
+        {
+            _MockRepository.Verify(_ => _.SaveChanges());
+        }
     }
 }

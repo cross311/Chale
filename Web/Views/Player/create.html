@@ -1,0 +1,15 @@
+﻿@Master['layout']
+
+@Section['Content']
+<form action="@Path['~/Tournaments/@Model/players/']" method="post" role="form">
+    <div class="form-group">
+        <label for="playerName">Name</label>
+        <input type="text" class="form-control" id="playerName" name="Name" placeholder="Enter name">
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Add Player</button>
+        </div>
+    </div>
+</form>
+@EndSection

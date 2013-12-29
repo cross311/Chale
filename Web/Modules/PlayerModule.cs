@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Nancy.Extensions;
+using Nancy.ModelBinding;
 
 namespace Web.Modules
 {
@@ -22,11 +23,17 @@ namespace Web.Modules
             this._service = service;
 
             Get["/"] = List;
-            Get["/create"] = _ => View["Create"];
+            Get["/create"] = CreateView;
             Post["/"] = Create;
             Get["/{id:int}"] = Display;
 
             this.Before.AddItemToEndOfPipeline(TournamentBeforeFilter);
+        }
+
+        private dynamic CreateView(dynamic arg)
+        {
+            Tournament tournament = arg.tournament;
+            return View["Create", tournament.TournamentId];
         }
 
         private dynamic List(dynamic arg)
@@ -50,7 +57,16 @@ namespace Web.Modules
 
         private dynamic Create(dynamic arg)
         {
-            throw new NotImplementedException();
+            Tournament tournament = arg.tournament;
+            AddPlayerModel addPlayer = this.Bind<AddPlayerModel>();
+
+            var newPlayer = new Player(addPlayer.Name);
+            newPlayer = _service.AddPlayer(tournament, newPlayer);
+
+            if (this.Request.Headers.Accept.Any(a => a.Item1.Contains("html")))
+                return Response.AsRedirect(string.Format("/tournaments/{0}/players/{1}", tournament.TournamentId, newPlayer.PlayerId));
+
+            return HttpStatusCode.NoContent;
         }
 
         private dynamic Display(dynamic arg)
@@ -75,5 +91,10 @@ namespace Web.Modules
         public List<PlayerModel> Players { get; set; }
 
         public string AddUri { get; set; }
+    }
+
+    public class AddPlayerModel
+    {
+        public string Name { get; set; }
     }
 }

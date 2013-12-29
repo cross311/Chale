@@ -87,6 +87,9 @@
     <Content Include="Views\layout.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Views\Player\create.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Views\Player\players.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

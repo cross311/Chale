@@ -8,7 +8,9 @@ namespace GameDataLayer
     {
         IQueryable<T> Get { get; }
 
-        T Save(T value);
+        T AddNew(T value);
+
+        void SaveChanges();
     }
 
     public class EntityFrameworkRepository<T> : IRepository<T> where T : class
@@ -25,11 +27,15 @@ namespace GameDataLayer
             get { return _Context.Set<T>().Include("Players").Include("Games"); }
         }
 
-        public T Save(T value)
+        public T AddNew(T value)
         {
             var addedValue = _Context.Set<T>().Add(value);
-            _Context.SaveChanges();
             return addedValue;
+        }
+
+        public void SaveChanges()
+        {
+            _Context.SaveChanges();
         }
     }
 }

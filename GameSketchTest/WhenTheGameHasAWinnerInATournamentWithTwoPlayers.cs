@@ -61,5 +61,11 @@ namespace GameSketchTest
         {
             _tournament.IsCompleted().Should().Be(true);
         }
+
+        [TestMethod]
+        public void SaveShouldHaveBeenCalled()
+        {
+            _MockRepository.Verify(_ => _.SaveChanges());
+        }
     }
 }

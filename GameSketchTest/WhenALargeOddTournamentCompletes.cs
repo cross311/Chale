@@ -21,7 +21,7 @@ namespace GameSketchTest
         {
             _tournament = new Tournament();
             _MockRepository = new Mock<IRepository<Tournament>>();
-            _MockRepository.Setup(_ => _.Save(It.IsAny<Tournament>())).Returns(_tournament);
+            _MockRepository.Setup(_ => _.AddNew(It.IsAny<Tournament>())).Returns(_tournament);
 
             for (int playerNumber = 1; playerNumber <= NumberOfPlayers; playerNumber++)
             {
