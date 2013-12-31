@@ -25,7 +25,7 @@ namespace Web.Modules
             Get["/create"] = _ => View["Create"];
             Post["/"] = Create;
             Get["/{id:int}"] = Display;
-            Post["/start"] = Start;
+            Post["/{id:int}/start"] = Start;
         }
 
         private dynamic Display(dynamic arg)
@@ -76,8 +76,9 @@ namespace Web.Modules
 
         private TournamentModel FillInUri(TournamentModel tournament)
         {
-            tournament.Uri = string.Format("{0}{1}", Context.ToFullPath("/tournaments/"), tournament.Id);
-            tournament.PlayersUri = string.Format("{0}{1}/players/", Context.ToFullPath("/tournaments/"), tournament.Id);
+            tournament.Uri = Context.ToFullPath(string.Format("~/tournaments/{0}", tournament.Id));
+            tournament.PlayersUri = Context.ToFullPath(string.Format("~/tournaments/{0}/players/", tournament.Id));
+            tournament.StartUri = Context.ToFullPath(string.Format("~/tournaments/{0}/start", tournament.Id));
             return tournament;
         }
 
@@ -117,14 +118,23 @@ namespace Web.Modules
             var newTournament = _service.Create(createViewModel.Name, createViewModel.Description);
 
             if (this.Request.Headers.Accept.Any(a => a.Item1.Contains("html")))
-                return Response.AsRedirect("/tournaments/");
+                return Response.AsRedirect("~/tournaments/");
 
             return HttpStatusCode.NoContent;
         }
 
         private dynamic Start(dynamic arg)
         {
-            throw new NotImplementedException();
+            int tournamentId = arg.id;
+            var tournament = _repo.Get.SingleOrDefault(t => t.TournamentId == tournamentId);
+            if (tournament == null) return new NotFoundResponse();
+
+            tournament = _service.Start(tournament);
+
+            if (this.Request.Headers.Accept.Any(a => a.Item1.Contains("html")))
+                return Response.AsRedirect(string.Format("~/tournaments/{0}", tournament.TournamentId));
+
+            return HttpStatusCode.NoContent;
         }
     }
 
@@ -153,6 +163,8 @@ namespace Web.Modules
         public List<GameModel> Games { get; set; }
 
         public string PlayersUri { get; set; }
+
+        public string StartUri { get; set; }
     }
 
     public class PlayerModel
