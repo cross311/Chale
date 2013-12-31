@@ -32,7 +32,7 @@ namespace Web.Modules
         {
             Int32 id = arg.id;
             var tournament = _repo.Get.SingleOrDefault(t => t.TournamentId == id);
-            return FillInUri(CreateTournamentModel(tournament));
+            return FillInActions(CreateTournamentModel(tournament));
         }
 
         private dynamic List(dynamic _)
@@ -42,12 +42,12 @@ namespace Web.Modules
         {
             var viewmodel = new TournamentsModel()
             {
-                CreateUri = Context.ToFullPath("/tournaments/create"),
                 Tournaments = _repo.Get.Select(tournament => new TournamentModel
                 {
                     Id = tournament.TournamentId,
                     Name = tournament.Name,
                     Description = tournament.Description,
+                    IsStarted = tournament.Games.Any(),
                     NumberOfPlayers = tournament.Players.Count,
                     Players = tournament.Players.Select(p =>
                         new PlayerModel
@@ -69,17 +69,20 @@ namespace Web.Modules
                     ).ToList()
                 }).ToList()
             };
-            viewmodel.Tournaments.ForEach(t => FillInUri(t));
+            viewmodel.Actions.Add(new ActionModel("get", Context.ToFullPath("/tournaments/create"), "Add Tournament"));
+            viewmodel.Tournaments.ForEach(t => FillInActions(t));
 
             return viewmodel;
         }
 
-        private TournamentModel FillInUri(TournamentModel tournament)
+        private TournamentModel FillInActions(TournamentModel tournamentModel)
         {
-            tournament.Uri = Context.ToFullPath(string.Format("~/tournaments/{0}", tournament.Id));
-            tournament.PlayersUri = Context.ToFullPath(string.Format("~/tournaments/{0}/players/", tournament.Id));
-            tournament.StartUri = Context.ToFullPath(string.Format("~/tournaments/{0}/start", tournament.Id));
-            return tournament;
+            tournamentModel.Href = Context.ToFullPath(string.Format("~/tournaments/{0}", tournamentModel.Id));
+
+            tournamentModel.Actions.Add(new ActionModel("get", string.Format("{0}/players", tournamentModel.Href), "View Players"));
+            if (!tournamentModel.IsStarted && tournamentModel.NumberOfPlayers > 0)
+                tournamentModel.Actions.Add(new ActionModel("post", string.Format("{0}/start", tournamentModel.Href), "Start Tournament"));
+            return tournamentModel;
         }
 
         private TournamentModel CreateTournamentModel(Tournament tournament)
@@ -89,6 +92,7 @@ namespace Web.Modules
                 Id = tournament.TournamentId,
                 Name = tournament.Name,
                 Description = tournament.Description,
+                IsStarted = tournament.IsStarted(),
                 NumberOfPlayers = tournament.Players.Count,
                 Players = tournament.Players.Select(p =>
                     new PlayerModel
@@ -147,24 +151,33 @@ namespace Web.Modules
 
     public class TournamentsModel
     {
-        public string CreateUri { get; set; }
+        public TournamentsModel()
+        {
+            Actions = new List<ActionModel>();
+        }
         public List<TournamentModel> Tournaments { get; set; }
+        public List<ActionModel> Actions { get; set; }
     }
 
     public class TournamentModel
     {
+        public TournamentModel()
+        {
+            Players = new List<PlayerModel>();
+            Games = new List<GameModel>();
+            Actions = new List<ActionModel>();
+        }
+
         public Int32 Id { get; set; }
-        public string Uri { get; set; }
+        public string Href { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public bool IsStarted { get; set; }
         public int NumberOfPlayers { get; set; }
         public int NumberOfGames { get; set; }
         public List<PlayerModel> Players { get; set; }
         public List<GameModel> Games { get; set; }
-
-        public string PlayersUri { get; set; }
-
-        public string StartUri { get; set; }
+        public List<ActionModel> Actions { get; set; }
     }
 
     public class PlayerModel
@@ -172,7 +185,7 @@ namespace Web.Modules
         public Int32 Id { get; set; }
         public string Name { get; set; }
         public int NumberOfWonGames { get; set; }
-        public string Uri { get; set; }
+        public string Href { get; set; }
     }
 
     public class GameModel
@@ -180,5 +193,18 @@ namespace Web.Modules
         public Int32 Id { get; set; }
         public List<Int32> PlayerIds { get; set; }
         public Int32 WinningPlayerId { get; set; }
+    }
+
+    public class ActionModel
+    {
+        public ActionModel(string method, string href, string prompt)
+        {
+            this.Method = method;
+            this.Href = href;
+            this.Prompt = prompt;
+        }
+        public string Href { get; set; }
+        public string Method { get; set; }
+        public string Prompt { get; set; }
     }
 }

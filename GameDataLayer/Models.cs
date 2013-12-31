@@ -60,6 +60,11 @@ namespace GameDataLayer
             return game;
         }
 
+        public bool IsStarted()
+        {
+            return Games.Any();
+        }
+
         public bool IsCompleted()
         {
             return Winner != null;

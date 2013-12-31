@@ -45,13 +45,13 @@ namespace Web.Modules
                         new PlayerModel
                         {
                             Id = p.PlayerId,
-                            Uri = string.Format("{0}{1}/players/{2}", Context.ToFullPath("/tournaments/"), tournament.TournamentId, p.PlayerId),
+                            Href = string.Format("{0}{1}/players/{2}", Context.ToFullPath("/tournaments/"), tournament.TournamentId, p.PlayerId),
                             Name = p.Name,
                             NumberOfWonGames = tournament.Games.Count(g => g.Winner != null && g.Winner == p)
                         }
-                    ).ToList(),
-                AddUri = Context.ToFullPath(string.Format("/tournaments/{0}/players/create", tournament.TournamentId)),
+                    ).ToList()
             };
+            playersModel.Actions.Add(new ActionModel("get", Context.ToFullPath(string.Format("/tournaments/{0}/players/create", tournament.TournamentId)), "Add Player"));
             return playersModel;
         }
 
@@ -81,7 +81,7 @@ namespace Web.Modules
                 Id = player.PlayerId,
                 Name = player.Name,
                 NumberOfWonGames = player.WonGames.Count(),
-                Uri = Context.ToFullPath(string.Format("/tournaments/{0}/players/{1}", tournament.TournamentId, player.PlayerId))
+                Href = Context.ToFullPath(string.Format("/tournaments/{0}/players/{1}", tournament.TournamentId, player.PlayerId))
             };
         }
 
@@ -99,9 +99,13 @@ namespace Web.Modules
 
     public class PlayersModel
     {
+        public PlayersModel()
+        {
+            Actions = new List<ActionModel>();
+        }
         public List<PlayerModel> Players { get; set; }
 
-        public string AddUri { get; set; }
+        public List<ActionModel> Actions { get; set; }
     }
 
     public class AddPlayerModel

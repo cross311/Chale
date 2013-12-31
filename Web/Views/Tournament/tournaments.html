@@ -6,17 +6,18 @@
 <ul class="tournament-list">
     @Each.Tournaments
     <li>
-        <h3><a href="@Current.Uri">@Current.Name</a></h3>
+        <h3><a href="@Current.Href">@Current.Name</a></h3>
         <p>@Current.Description</p>
         <ul class="tournament-stats">
-            <li><span><a href="@Current.PlayersUri">Players</a></span> @Current.NumberOfPlayers</li>
+            <li><span>Players</span> @Current.NumberOfPlayers</li>
             <li><span>Games</span> @Current.NumberOfGames</li>
         </ul>
-        <form action="@Current.StartUri" method="post">
-            <button type="submit" class="btn btn-default">Start Tournament</button>
-        </form>
     </li>
     @EndEach
 </ul>
-<a href="@Model.CreateUri" class="btn btn-default">Create Tournament</a>
+@Each.Actions
+<form action="@Current.Href" method="@Current.Method">
+    <button type="submit" class="btn btn-default">@Current.Prompt</button>
+</form>
+@EndEach
 @EndSection

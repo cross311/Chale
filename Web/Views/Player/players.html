@@ -5,12 +5,16 @@
 <ul class="player-list">
     @Each.Players
     <li>
-        <h3><a href="@Current.Uri">@Current.Name</a></h3>
+        <h3><a href="@Current.Href">@Current.Name</a></h3>
         <ul class="player-stats">
             <li><span>Won Games</span> @Current.NumberOfWonGames</li>
         </ul>
     </li>
     @EndEach
 </ul>
-<a href="@Model.AddUri" class="btn btn-default">Add Player</a>
+@Each.Actions
+<form action="@Current.Href" method="@Current.Method">
+    <button type="submit" class="btn btn-default">@Current.Prompt</button>
+</form>
+@EndEach
 @EndSection
