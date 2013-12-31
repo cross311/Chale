@@ -50,7 +50,7 @@ namespace Web.Modules
                             NumberOfWonGames = tournament.Games.Count(g => g.Winner != null && g.Winner == p)
                         }
                     ).ToList(),
-                AddUri = Context.ToFullPath(string.Format("/tournaments/{0}/players/create", tournament.TournamentId),
+                AddUri = Context.ToFullPath(string.Format("/tournaments/{0}/players/create", tournament.TournamentId)),
             };
             return playersModel;
         }

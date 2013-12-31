@@ -25,6 +25,7 @@ namespace Web.Modules
             Get["/create"] = _ => View["Create"];
             Post["/"] = Create;
             Get["/{id:int}"] = Display;
+            Post["/start"] = Start;
         }
 
         private dynamic Display(dynamic arg)
@@ -119,6 +120,11 @@ namespace Web.Modules
                 return Response.AsRedirect("/tournaments/");
 
             return HttpStatusCode.NoContent;
+        }
+
+        private dynamic Start(dynamic arg)
+        {
+            throw new NotImplementedException();
         }
     }
 
