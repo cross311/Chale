@@ -39,5 +39,16 @@ namespace Web.Modules
         {
             throw new NotImplementedException();
         }
+
+        public class GamesModel
+        {
+            public List<GameModel> Games { get; set; }
+            public string TournamentHref { get; set; }
+        }
+
+        public class MarkWinnerModel
+        {
+            public Int32 WinningPlayerId { get; set; }
+        }
     }
 }

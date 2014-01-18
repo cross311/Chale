@@ -16,23 +16,34 @@ namespace Web.Modules
         private TournamentService _service;
 
         public TournamentModule(IRepository<Tournament> repo, TournamentService service)
-            : base("/tournaments")
+            : base(Href.Tournaments)
         {
             this._repo = repo;
             this._service = service;
 
-            Get["/"] = List;
-            Get["/create"] = _ => View["Create"];
-            Post["/"] = Create;
-            Get["/{id:int}"] = Display;
-            Post["/{id:int}/start"] = Start;
+            Get[Href.Root] = List;
+            Get[Href.Create] = _ => View["Create"];
+            Post[Href.Root] = Create;
+            Get[Href.ToNancyRouteAllInts(Href.Get, "id")] = Display;
+            Post[Href.ToNancyRouteAllInts(Href.Start, "id")] = Start;
         }
 
         private dynamic Display(dynamic arg)
         {
             Int32 id = arg.id;
             var tournament = _repo.Get.SingleOrDefault(t => t.TournamentId == id);
-            return FillInActions(CreateTournamentModel(tournament));
+            return new TournamentModel
+            {
+                Id = tournament.TournamentId,
+                Name = tournament.Name,
+                Description = tournament.Description,
+                IsStarted = tournament.Games.Any(),
+                NumberOfPlayers = tournament.Players.Count,
+                NumberOfGames = tournament.Games.Count,
+                Href = Href.TournamentHref(tournament.TournamentId),
+                PlayersHref = Href.TournamentsPlayersHref(tournament.TournamentId),
+                GamesHref = Href.TournamentsGamesHref(tournament.TournamentId)
+            };
         }
 
         private dynamic List(dynamic _)
@@ -49,40 +60,19 @@ namespace Web.Modules
                     Description = tournament.Description,
                     IsStarted = tournament.Games.Any(),
                     NumberOfPlayers = tournament.Players.Count,
-                    Players = tournament.Players.Select(p =>
-                        new PlayerModel
-                        {
-                            Id = p.PlayerId,
-                            Name = p.Name,
-                            NumberOfWonGames = tournament.Games.Count(g => g.Winner != null && g.Winner == p)
-                        }
-                    ).ToList(),
                     NumberOfGames = tournament.Games.Count,
-                    Games = tournament.Games.Select(g =>
-                        new GameModel
-                        {
-                            Id = g.GameId,
-                            PlayerIds = g.Players.Select(p =>
-                                p.PlayerId).ToList(),
-                            WinningPlayerId = g.Winner != null ? g.Winner.PlayerId : -1
-                        }
-                    ).ToList()
                 }).ToList()
             };
-            viewmodel.Actions.Add(new ActionModel("get", Context.ToFullPath("/tournaments/create"), "Add Tournament"));
-            viewmodel.Tournaments.ForEach(t => FillInActions(t));
+
+            viewmodel.Tournaments.ForEach(t =>
+            {
+                t.Href = Href.TournamentHref(t.Id);
+                t.PlayersHref = Href.TournamentsPlayersHref(t.Id);
+                t.GamesHref = Href.TournamentsGamesHref(t.Id);
+            });
+            viewmodel.CreateTournamentHref = Href.TournamentCreate;
 
             return viewmodel;
-        }
-
-        private TournamentModel FillInActions(TournamentModel tournamentModel)
-        {
-            tournamentModel.Href = Context.ToFullPath(string.Format("~/tournaments/{0}", tournamentModel.Id));
-
-            tournamentModel.Actions.Add(new ActionModel("get", string.Format("{0}/players", tournamentModel.Href), "View Players"));
-            if (!tournamentModel.IsStarted && tournamentModel.NumberOfPlayers > 0)
-                tournamentModel.Actions.Add(new ActionModel("post", string.Format("{0}/start", tournamentModel.Href), "Start Tournament"));
-            return tournamentModel;
         }
 
         private TournamentModel CreateTournamentModel(Tournament tournament)
@@ -94,24 +84,7 @@ namespace Web.Modules
                 Description = tournament.Description,
                 IsStarted = tournament.IsStarted(),
                 NumberOfPlayers = tournament.Players.Count,
-                Players = tournament.Players.Select(p =>
-                    new PlayerModel
-                    {
-                        Id = p.PlayerId,
-                        Name = p.Name,
-                        NumberOfWonGames = tournament.Games.Count(g => g.Winner != null && g.Winner == p)
-                    }
-                ).ToList(),
                 NumberOfGames = tournament.Games.Count,
-                Games = tournament.Games.Select(g =>
-                    new GameModel
-                    {
-                        Id = g.GameId,
-                        PlayerIds = g.Players.Select(p =>
-                            p.PlayerId).ToList(),
-                        WinningPlayerId = g.Winner != null ? g.Winner.PlayerId : -1
-                    }
-                ).ToList()
             };
         }
 
@@ -151,23 +124,12 @@ namespace Web.Modules
 
     public class TournamentsModel
     {
-        public TournamentsModel()
-        {
-            Actions = new List<ActionModel>();
-        }
         public List<TournamentModel> Tournaments { get; set; }
-        public List<ActionModel> Actions { get; set; }
+        public string CreateTournamentHref { get; set; }
     }
 
     public class TournamentModel
     {
-        public TournamentModel()
-        {
-            Players = new List<PlayerModel>();
-            Games = new List<GameModel>();
-            Actions = new List<ActionModel>();
-        }
-
         public Int32 Id { get; set; }
         public string Href { get; set; }
         public string Name { get; set; }
@@ -175,9 +137,9 @@ namespace Web.Modules
         public bool IsStarted { get; set; }
         public int NumberOfPlayers { get; set; }
         public int NumberOfGames { get; set; }
-        public List<PlayerModel> Players { get; set; }
-        public List<GameModel> Games { get; set; }
-        public List<ActionModel> Actions { get; set; }
+        public string PlayersHref { get; set; }
+        public string GamesHref { get; set; }
+        public string AddPlayerHref { get; set; }
     }
 
     public class PlayerModel
@@ -186,6 +148,8 @@ namespace Web.Modules
         public string Name { get; set; }
         public int NumberOfWonGames { get; set; }
         public string Href { get; set; }
+        public string GamesHref { get; set; }
+        public string TournamentHref { get; set; }
     }
 
     public class GameModel
@@ -193,18 +157,9 @@ namespace Web.Modules
         public Int32 Id { get; set; }
         public List<Int32> PlayerIds { get; set; }
         public Int32 WinningPlayerId { get; set; }
-    }
-
-    public class ActionModel
-    {
-        public ActionModel(string method, string href, string prompt)
-        {
-            this.Method = method;
-            this.Href = href;
-            this.Prompt = prompt;
-        }
-        public string Href { get; set; }
-        public string Method { get; set; }
-        public string Prompt { get; set; }
+        public string PlayersHref { get; set; }
+        public string WinningPlayerHref { get; set; }
+        public string TournamentHref { get; set; }
+        public string MarkWinnerHref { get; set; }
     }
 }

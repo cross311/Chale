@@ -6,7 +6,7 @@
     {
         public IndexModule()
         {
-            Get["/"] = _ => View["index"];
+            Get[Href.Root] = _ => View["index"];
         }
     }
 }

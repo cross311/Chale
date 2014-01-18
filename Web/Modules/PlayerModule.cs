@@ -51,7 +51,6 @@ namespace Web.Modules
                         }
                     ).ToList()
             };
-            playersModel.Actions.Add(new ActionModel("get", Context.ToFullPath(string.Format("/tournaments/{0}/players/create", tournament.TournamentId)), "Add Player"));
             return playersModel;
         }
 
@@ -99,13 +98,9 @@ namespace Web.Modules
 
     public class PlayersModel
     {
-        public PlayersModel()
-        {
-            Actions = new List<ActionModel>();
-        }
         public List<PlayerModel> Players { get; set; }
-
-        public List<ActionModel> Actions { get; set; }
+        public string TournamentHref { get; set; }
+        public string AddPlayerHref { get; set; }
     }
 
     public class AddPlayerModel
