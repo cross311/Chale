@@ -117,3 +117,9 @@ UpgradeLog*.XML
 Metrics.typemock*
 /*/FileCache/
 *.dbmdl
+
+# ignore spa coffee script js files
+/Web/Content/spa/*.js
+/Web/Content/spa/*/*.js
+/Web/Content/spa/*.js.map
+/Web/Content/spa/*/*.js.map
