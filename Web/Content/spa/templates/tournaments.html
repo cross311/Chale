@@ -6,3 +6,12 @@
         {{tournament.Name}}
     </li>
 </ul>
+<form name="createTournament" class="form">
+    <label for="name" class="sr-only">Name</label>
+    <input type="text" placeholder="Name..." name="name" ng-model="newTournament.Name">
+    <label for="description" class="sr-only">Description</label>
+    <textarea rows="3" placeholder="Description..." name="description" ng-model="newTournament.Description"></textarea>
+    <div>
+        <input type="submit" class="btn btn-default" ng-click="create()" value="Create">
+    </div>
+</form>

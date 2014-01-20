@@ -23,7 +23,7 @@ namespace Web.Modules
 
             Get[Href.Root] = List;
             Get[Href.Create] = _ => View["Create"];
-            Post[Href.Root] = Create;
+            Post[Href.Create] = Create;
             Get[Href.ToNancyRouteAllInts(Href.Get, "id")] = Display;
             Post[Href.ToNancyRouteAllInts(Href.Start, "id")] = Start;
         }

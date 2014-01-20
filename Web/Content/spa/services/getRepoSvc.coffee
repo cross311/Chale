@@ -10,7 +10,8 @@ getRepo = ($http, $log) ->
         .success (data, status, headers, config) ->
             for t in data.Tournaments
                 tournamentVm.tournaments.push t
-            callback tournaments if angular.isFunction callback
+            tournamentVm.createTournamentHref = data.CreateTournamentHref
+            callback tournamentVm if angular.isFunction callback
         .error (data, status, headers, config) ->
             $log.error 
                 data: data

@@ -1,12 +1,11 @@
 ﻿@Master['layout']
 
 @Section['Scripts']
-
 <script src="@Path['~/content/spa/spa_app.js']"></script>
 @EndSection
 
 @Section['Content']
-    <div class="spa-app" ng-app="chale">
+    <div class="spa-app container" ng-app="chale">
         <div ng-view></div>
     </div>
 @EndSection
