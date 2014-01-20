@@ -2,5 +2,6 @@
 <bundle minify="true" runOnBuild="true" output="spa_app.js" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://vswebessentials.com/schemas/v1/bundle.xsd">
   <!--The order of the <file> elements determines the order of the file contents when bundled.-->
   <file>/Content/spa/modules/chaleModule.js</file>
+  <file>/Content/spa/services/getRepoSvc.js</file>
   <file>/Content/spa/controllers/tournamentsCtrl.js</file>
 </bundle>

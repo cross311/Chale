@@ -109,12 +109,19 @@
     <Content Include="Content\spa\modules\chaleModule.min.js">
       <DependentUpon>chaleModule.js</DependentUpon>
     </Content>
+    <Content Include="Content\spa\services\getRepoSvc.js">
+      <DependentUpon>getRepoSvc.coffee</DependentUpon>
+    </Content>
+    <Content Include="Content\spa\services\getRepoSvc.min.js">
+      <DependentUpon>getRepoSvc.js</DependentUpon>
+    </Content>
     <Content Include="Content\spa\spa_app.js">
       <DependentUpon>spa_app.js.bundle</DependentUpon>
     </Content>
     <Content Include="Content\spa\spa_app.min.js">
       <DependentUpon>spa_app.js.bundle</DependentUpon>
     </Content>
+    <Content Include="Content\spa\templates\tournaments.html" />
     <Content Include="Views\Game\game.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -170,6 +177,7 @@
       <DependentUpon>shared.js.bundle</DependentUpon>
     </Content>
     <Content Include="Content\spa\controllers\tournamentsCtrl.coffee" />
+    <Content Include="Content\spa\services\getRepoSvc.coffee" />
     <None Include="Content\spa\spa_app.js.bundle" />
     <Content Include="Content\spa\spa_app.min.js.map">
       <DependentUpon>spa_app.js.bundle</DependentUpon>
@@ -191,10 +199,7 @@
       <Name>GameSketch</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Content\spa\services\" />
-    <Folder Include="Content\spa\templates\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
