@@ -1,0 +1,13 @@
+﻿@Master['layout']
+
+@Section['Content']
+<h2>Welcome To Chale!</h2>
+<ul class="game-list">
+    @Each.Games
+    <li>
+        <a href="@Current.Href">@Current.Players[0].Name Vs. @Current.Players[1].Name</a>
+    </li>
+    @EndEach
+</ul>
+<a href="@Model.TournamentHref" class="btn btn-default">Tournament</a>
+@EndSection

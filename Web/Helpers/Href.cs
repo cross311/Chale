@@ -151,12 +151,12 @@ namespace Web
             return string.Format(TournamentsGameWinner, tournamentId, gameId);
         }
 
-        public static string TournamentsGameMarkWinnerHref(Int32 tournamentId, Int32 gameId)
+        public static string TournamentsGamePostWinnerHref(Int32 tournamentId, Int32 gameId)
         {
-            return TournamentsGameMarkWinnerHref(tournamentId.ToString(), gameId.ToString());
+            return TournamentsGamePostWinnerHref(tournamentId.ToString(), gameId.ToString());
         }
 
-        public static string TournamentsGameMarkWinnerHref(string tournamentId, string gameId)
+        public static string TournamentsGamePostWinnerHref(string tournamentId, string gameId)
         {
             return string.Format(TournamentsGameWinner, tournamentId, gameId);
         }

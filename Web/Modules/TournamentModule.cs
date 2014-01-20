@@ -144,28 +144,4 @@ namespace Web.Modules
 
         public string TournamentsHref { get; set; }
     }
-
-    public class PlayerModel
-    {
-        public Int32 Id { get; set; }
-        public string Name { get; set; }
-        public int NumberOfWonGames { get; set; }
-        public string Href { get; set; }
-        public string GamesHref { get; set; }
-        public string TournamentHref { get; set; }
-        public string TournamentPlayersHref { get; set; }
-    }
-
-    public class GameModel
-    {
-        public Int32 Id { get; set; }
-        public List<Int32> PlayerIds { get; set; }
-        public Int32? WinningPlayerId { get; set; }
-        public string PlayersHref { get; set; }
-        public string WinningPlayerHref { get; set; }
-        public string TournamentHref { get; set; }
-        public string MarkWinnerHref { get; set; }
-
-        public string Href { get; set; }
-    }
 }

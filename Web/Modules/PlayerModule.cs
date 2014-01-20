@@ -80,16 +80,7 @@ namespace Web.Modules
             Player player = tournament.Players.SingleOrDefault(p => p.PlayerId == playerId);
             if (player == null) return new NotFoundResponse();
 
-            return new PlayerModel()
-            {
-                Id = player.PlayerId,
-                Name = player.Name,
-                NumberOfWonGames = player.WonGames.Count(),
-                Href = Href.TournamentsPlayerHref(tournament.TournamentId, player.PlayerId),
-                TournamentHref = Href.TournamentHref(tournament.TournamentId),
-                TournamentPlayersHref = Href.TournamentsPlayersHref(tournament.TournamentId),
-                GamesHref = Href.TournamentsPlayerGamesHref(tournament.TournamentId, player.PlayerId)
-            };
+            return new PlayerModel.Mapper(tournament).ToModel(player);
         }
     }
 
@@ -98,6 +89,40 @@ namespace Web.Modules
         public List<PlayerModel> Players { get; set; }
         public string TournamentHref { get; set; }
         public string AddPlayerHref { get; set; }
+    }
+
+    public class PlayerModel
+    {
+        public Int32 Id { get; set; }
+        public string Name { get; set; }
+        public int NumberOfWonGames { get; set; }
+        public string Href { get; set; }
+        public string GamesHref { get; set; }
+        public string TournamentHref { get; set; }
+        public string TournamentPlayersHref { get; set; }
+
+        public class Mapper
+        {
+            private Tournament tournament;
+            public Mapper(Tournament tournament)
+            {
+                this.tournament = tournament;
+            }
+
+            public PlayerModel ToModel(Player player)
+            {
+                return new PlayerModel()
+                {
+                    Id = player.PlayerId,
+                    Name = player.Name,
+                    NumberOfWonGames = player.WonGames.Count(),
+                    Href = Web.Href.TournamentsPlayerHref(tournament.TournamentId, player.PlayerId),
+                    TournamentHref = Web.Href.TournamentHref(tournament.TournamentId),
+                    TournamentPlayersHref = Web.Href.TournamentsPlayersHref(tournament.TournamentId),
+                    GamesHref = Web.Href.TournamentsPlayerGamesHref(tournament.TournamentId, player.PlayerId)
+                };
+            }
+        }
     }
 
     public class AddPlayerModel

@@ -1,0 +1,23 @@
+﻿@Master['layout']
+
+@Section['Content']
+<h2>Welcome To Chale!</h2>
+<h3>@Model.Players[0].Name Vs. @Model.Players[1].Name</h3>
+<div>
+    <h4>Player 1:</h4>
+    <a href="@Model.Players[0].Href">@Model.Players[0].Name</a>
+    <form action="@Path['@Model.PostWinnerHref']" method="post">
+        <input type="hidden" name="WinningPlayerId" value="@Model.Players[0].Id">
+        <button type="submit" class="btn">Mark as winner</button>
+    </form>
+</div>
+<div>
+    <h4>Player 2:</h4>
+    <a href="@Model.Players[1].Href">@Model.Players[1].Name</a>
+    <form action="@Path['@Model.PostWinnerHref']" method="post">
+        <input type="hidden" name="WinningPlayerId" value="@Model.Players[1].Id">
+        <button type="submit" class="btn">Mark as winner</button>
+    </form>
+</div>
+<a href="@Model.TournamentGamesHref" class="btn btn-default">Games</a>
+@EndSection
