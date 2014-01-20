@@ -42,7 +42,8 @@ namespace Web.Modules
                 NumberOfGames = tournament.Games.Count,
                 Href = Href.TournamentHref(tournament.TournamentId),
                 PlayersHref = Href.TournamentsPlayersHref(tournament.TournamentId),
-                GamesHref = Href.TournamentsGamesHref(tournament.TournamentId)
+                GamesHref = Href.TournamentsGamesHref(tournament.TournamentId),
+                TournamentsHref = Href.Tournaments
             };
         }
 
@@ -140,6 +141,8 @@ namespace Web.Modules
         public string PlayersHref { get; set; }
         public string GamesHref { get; set; }
         public string AddPlayerHref { get; set; }
+
+        public string TournamentsHref { get; set; }
     }
 
     public class PlayerModel
@@ -150,6 +153,7 @@ namespace Web.Modules
         public string Href { get; set; }
         public string GamesHref { get; set; }
         public string TournamentHref { get; set; }
+        public string TournamentPlayersHref { get; set; }
     }
 
     public class GameModel

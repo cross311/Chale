@@ -17,15 +17,15 @@ namespace Web.Modules
         private TournamentService _service;
 
         public PlayerModule(IRepository<Tournament> repo, TournamentService service)
-            : base("/tournaments/{tournamentId:int}/players/")
+            : base(Href.ToNancyRouteAllInts(Href.TournamentsPlayers, "tournamentId"))
         {
             this._repo = repo;
             this._service = service;
 
-            Get["/"] = List;
-            Get["/create"] = CreateView;
-            Post["/"] = Create;
-            Get["/{id:int}"] = Display;
+            Get[Href.Root] = List;
+            Get[Href.Create] = CreateView;
+            Post[Href.Root] = Create;
+            Get[Href.ToNancyRouteAllInts(Href.Get, "id")] = Display;
 
             this.Before.AddItemToEndOfPipeline(TournamentBeforeFilter);
         }
@@ -33,7 +33,7 @@ namespace Web.Modules
         private dynamic CreateView(dynamic arg)
         {
             Tournament tournament = arg.tournament;
-            return View["Create", tournament.TournamentId];
+            return View["Create", Href.TournamentsPlayersHref(tournament.TournamentId)];
         }
 
         private dynamic List(dynamic arg)
@@ -45,12 +45,16 @@ namespace Web.Modules
                         new PlayerModel
                         {
                             Id = p.PlayerId,
-                            Href = string.Format("{0}{1}/players/{2}", Context.ToFullPath("/tournaments/"), tournament.TournamentId, p.PlayerId),
+                            Href = Href.TournamentsPlayerHref(tournament.TournamentId, p.PlayerId),
+                            GamesHref = Href.TournamentsPlayerGamesHref(tournament.TournamentId, p.PlayerId),
+                            TournamentHref = Href.TournamentHref(tournament.TournamentId),
                             Name = p.Name,
                             NumberOfWonGames = tournament.Games.Count(g => g.Winner != null && g.Winner == p)
                         }
                     ).ToList()
             };
+            playersModel.AddPlayerHref = Href.TournamentsPlayerCreateHref(tournament.TournamentId);
+            playersModel.TournamentHref = Href.TournamentHref(tournament.TournamentId);
             return playersModel;
         }
 
@@ -63,7 +67,7 @@ namespace Web.Modules
             newPlayer = _service.AddPlayer(tournament, newPlayer);
 
             if (this.Request.Headers.Accept.Any(a => a.Item1.Contains("html")))
-                return Response.AsRedirect(string.Format("/tournaments/{0}/players/{1}", tournament.TournamentId, newPlayer.PlayerId));
+                return Response.AsRedirect(Href.TournamentsPlayerHref(tournament.TournamentId, newPlayer.PlayerId));
 
             return HttpStatusCode.NoContent;
         }
@@ -80,7 +84,10 @@ namespace Web.Modules
                 Id = player.PlayerId,
                 Name = player.Name,
                 NumberOfWonGames = player.WonGames.Count(),
-                Href = Context.ToFullPath(string.Format("/tournaments/{0}/players/{1}", tournament.TournamentId, player.PlayerId))
+                Href = Href.TournamentsPlayerHref(tournament.TournamentId, player.PlayerId),
+                TournamentHref = Href.TournamentHref(tournament.TournamentId),
+                TournamentPlayersHref = Href.TournamentsPlayersHref(tournament.TournamentId),
+                GamesHref = Href.TournamentsPlayerGamesHref(tournament.TournamentId, player.PlayerId)
             };
         }
 

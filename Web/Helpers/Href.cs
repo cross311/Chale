@@ -103,12 +103,12 @@ namespace Web
             return string.Format(TournamentsPlayerCreate, tournamentId);
         }
 
-        public static string TournamentsPlayersGamesHref(Int32 tournamentId, Int32 playerId)
+        public static string TournamentsPlayerGamesHref(Int32 tournamentId, Int32 playerId)
         {
-            return TournamentsPlayersGamesHref(tournamentId.ToString(), playerId.ToString());
+            return TournamentsPlayerGamesHref(tournamentId.ToString(), playerId.ToString());
         }
 
-        public static string TournamentsPlayersGamesHref(string tournamentId, string playerId)
+        public static string TournamentsPlayerGamesHref(string tournamentId, string playerId)
         {
             return string.Format(TournamentsPlayerGames, tournamentId, playerId);
         }
@@ -133,22 +133,22 @@ namespace Web
             return string.Format(TournamentsGame, tournamentId, gameId);
         }
 
-        public static string TournamentsGamesPlayersHref(Int32 tournamentId, Int32 gameId)
+        public static string TournamentsGamePlayersHref(Int32 tournamentId, Int32 gameId)
         {
-            return TournamentsGamesPlayersHref(tournamentId.ToString(), gameId.ToString());
+            return TournamentsGamePlayersHref(tournamentId.ToString(), gameId.ToString());
         }
 
-        public static string TournamentsGamesPlayersHref(string tournamentId, string gameId)
+        public static string TournamentsGamePlayersHref(string tournamentId, string gameId)
         {
             return string.Format(TournamentsGamePlayers, tournamentId, gameId);
         }
 
-        public static string TournamentsGamesWinnerHref(Int32 tournamentId, Int32 gameId)
+        public static string TournamentsGameWinnerHref(Int32 tournamentId, Int32 gameId)
         {
-            return TournamentsGamesWinnerHref(tournamentId.ToString(), gameId.ToString());
+            return TournamentsGameWinnerHref(tournamentId.ToString(), gameId.ToString());
         }
 
-        public static string TournamentsGamesWinnerHref(string tournamentId, string gameId)
+        public static string TournamentsGameWinnerHref(string tournamentId, string gameId)
         {
             return string.Format(TournamentsGameWinner, tournamentId, gameId);
         }

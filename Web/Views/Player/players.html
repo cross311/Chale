@@ -12,9 +12,6 @@
     </li>
     @EndEach
 </ul>
-@Each.Actions
-<form action="@Current.Href" method="@Current.Method">
-    <button type="submit" class="btn btn-default">@Current.Prompt</button>
-</form>
-@EndEach
+<a href="@Model.AddPlayerHref" class="btn btn-default">Add Players</a>
+<a href="@Model.TournamentHref" class="btn btn-default">Tournament</a>
 @EndSection

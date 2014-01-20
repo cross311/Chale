@@ -1,7 +1,7 @@
 ﻿@Master['layout']
 
 @Section['Content']
-<form action="@Path['~/Tournaments/@Model/players/']" method="post" role="form">
+<form action="@Path['@Model']" method="post" role="form">
     <div class="form-group">
         <label for="playerName">Name</label>
         <input type="text" class="form-control" id="playerName" name="Name" placeholder="Enter name">
