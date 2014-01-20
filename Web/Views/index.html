@@ -1,6 +1,10 @@
 ﻿@Master['layout']
 
+@Section['Scripts']
+
+<script src="@Path['~/content/spa/spa_app_debug.js']"></script>
+@EndSection
+
 @Section['Content']
-<h2>Welcome To Chale!</h2>
-<p>Todo: Fill In information</p>
+    <div class="spa-app" ng-app="chale"></div>
 @EndSection

@@ -9,9 +9,7 @@
     <link href="@Path['~/content/bootstrap.css']" rel="Stylesheet" />
     <link href="@Path['~/content/default.min.css']" rel="Stylesheet" />
     
-    <script src="@Path['~/content/scripts/jquery.min.js']"></script>
-    <script src="@Path['~/content/scripts/highlight.min.js']"></script>
-    <script src="@Path['~/content/scripts/bootstrap.js']"></script>
+    <script src="@Path['~/content/scripts/shared.min.js']"></script>
     
     <script>
         $(document).ready(function () {
@@ -52,5 +50,6 @@
     <div class="container">
         @Section['Content']
     </div>
+    @Section['Scripts']
 </body>
 </html>

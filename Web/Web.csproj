@@ -78,9 +78,43 @@
     <Content Include="Content\nancy-vertical-bf-tb.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\scripts\angular\angular-loader.js" />
+    <Content Include="Content\scripts\angular\angular-loader.min.js" />
+    <Content Include="Content\scripts\angular\angular-resource.js" />
+    <Content Include="Content\scripts\angular\angular-resource.min.js" />
+    <Content Include="Content\scripts\angular\angular-route.js" />
+    <Content Include="Content\scripts\angular\angular-route.min.js" />
+    <Content Include="Content\scripts\angular\angular-touch.js" />
+    <Content Include="Content\scripts\angular\angular-touch.min.js" />
+    <Content Include="Content\scripts\angular\angular.js" />
+    <Content Include="Content\scripts\angular\angular.min.js" />
+    <Content Include="Content\scripts\shared.js">
+      <DependentUpon>shared.js.bundle</DependentUpon>
+    </Content>
+    <Content Include="Content\scripts\shared.min.js">
+      <DependentUpon>shared.js.bundle</DependentUpon>
+    </Content>
     <Content Include="Content\scripts\bootstrap.js" />
     <Content Include="Content\scripts\highlight.min.js" />
     <Content Include="Content\scripts\jquery.min.js" />
+    <Content Include="Content\spa\controllers\tournamentsCtrl.js">
+      <DependentUpon>tournamentsCtrl.coffee</DependentUpon>
+    </Content>
+    <Content Include="Content\spa\controllers\tournamentsCtrl.min.js">
+      <DependentUpon>tournamentsCtrl.js</DependentUpon>
+    </Content>
+    <Content Include="Content\spa\modules\chaleModule.js">
+      <DependentUpon>chaleModule.coffee</DependentUpon>
+    </Content>
+    <Content Include="Content\spa\modules\chaleModule.min.js">
+      <DependentUpon>chaleModule.js</DependentUpon>
+    </Content>
+    <Content Include="Content\spa\spa_app.js">
+      <DependentUpon>spa_app.js.bundle</DependentUpon>
+    </Content>
+    <Content Include="Content\spa\spa_app.min.js">
+      <DependentUpon>spa_app.js.bundle</DependentUpon>
+    </Content>
     <Content Include="Views\Game\game.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -125,6 +159,21 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="Content\spa\modules\chaleModule.coffee" />
+    <Content Include="Content\scripts\angular\angular-loader.min.js.map" />
+    <Content Include="Content\scripts\angular\angular-resource.min.js.map" />
+    <Content Include="Content\scripts\angular\angular-route.min.js.map" />
+    <Content Include="Content\scripts\angular\angular-touch.min.js.map" />
+    <Content Include="Content\scripts\angular\angular.min.js.map" />
+    <None Include="Content\scripts\shared.js.bundle" />
+    <Content Include="Content\scripts\shared.min.js.map">
+      <DependentUpon>shared.js.bundle</DependentUpon>
+    </Content>
+    <Content Include="Content\spa\controllers\tournamentsCtrl.coffee" />
+    <None Include="Content\spa\spa_app.js.bundle" />
+    <Content Include="Content\spa\spa_app.min.js.map">
+      <DependentUpon>spa_app.js.bundle</DependentUpon>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -142,7 +191,10 @@
       <Name>GameSketch</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Content\spa\services\" />
+    <Folder Include="Content\spa\templates\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
