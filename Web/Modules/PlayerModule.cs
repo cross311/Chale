@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using Nancy.Extensions;
 using Nancy.ModelBinding;
+using Web.Helpers;
 
 namespace Web.Modules
 {
@@ -27,7 +28,7 @@ namespace Web.Modules
             Post[Href.Root] = Create;
             Get[Href.ToNancyRouteAllInts(Href.Get, "id")] = Display;
 
-            this.Before.AddItemToEndOfPipeline(TournamentBeforeFilter);
+            this.Before.AddItemToEndOfPipeline(new TournamentBeforeFilter(this._repo).Filter);
         }
 
         private dynamic CreateView(dynamic arg)
@@ -89,17 +90,6 @@ namespace Web.Modules
                 TournamentPlayersHref = Href.TournamentsPlayersHref(tournament.TournamentId),
                 GamesHref = Href.TournamentsPlayerGamesHref(tournament.TournamentId, player.PlayerId)
             };
-        }
-
-        private Nancy.Response TournamentBeforeFilter(NancyContext arg)
-        {
-            int tournamentId = arg.Parameters.tournamentId;
-            var tournament = _repo.Get.SingleOrDefault(t => t.TournamentId == tournamentId);
-
-            if (tournament == null) return new NotFoundResponse();
-
-            arg.Parameters.tournament = tournament;
-            return null;
         }
     }
 

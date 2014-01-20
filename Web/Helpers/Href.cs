@@ -21,17 +21,19 @@ namespace Web
 
         public const string GetChild = "/{1}";
 
-        public const string Start = Get + "/start";
+        private const string StartAction = "/start";
 
-        public const string Winner = Get + "/winner";
+        public const string Start = Get + StartAction;
 
-        public const string MarkWinner = Get + "/markwinner";
+        private const string WinnerAction = "/winner";
+
+        public const string Winner = Get + WinnerAction;
 
         public const string Tournament = Tournaments + Get;
 
         public const string TournamentCreate = Tournaments + Create;
 
-        public const string TournamentWinner = Tournaments + Winner;
+        public const string TournamentWinner = Tournament + WinnerAction;
 
         public const string TournamentStart = Tournaments + Start;
 
@@ -41,9 +43,7 @@ namespace Web
 
         public const string Game = Games + Get;
 
-        public const string GameWinner = Games + Winner;
-
-        public const string GameMarkWinner = Games + MarkWinner;
+        public const string GameWinner = Game + WinnerAction;
 
         public const string TournamentsPlayers = Tournament + Players;
 
@@ -59,9 +59,7 @@ namespace Web
 
         public const string TournamentsGamePlayers = TournamentsGame + Players;
 
-        public const string TournamentsGameWinner = TournamentsGame + Winner;
-
-        public const string TournamentsGameMarkWinner = TournamentsGame + MarkWinner;
+        public const string TournamentsGameWinner = TournamentsGame + WinnerAction;
 
         public static string TournamentHref(Int32 tournamentId)
         {
@@ -160,7 +158,7 @@ namespace Web
 
         public static string TournamentsGameMarkWinnerHref(string tournamentId, string gameId)
         {
-            return string.Format(TournamentsGameMarkWinner, tournamentId, gameId);
+            return string.Format(TournamentsGameWinner, tournamentId, gameId);
         }
 
         public static string ToNancyRoute(string href, params string[] routeReplacements)

@@ -160,10 +160,12 @@ namespace Web.Modules
     {
         public Int32 Id { get; set; }
         public List<Int32> PlayerIds { get; set; }
-        public Int32 WinningPlayerId { get; set; }
+        public Int32? WinningPlayerId { get; set; }
         public string PlayersHref { get; set; }
         public string WinningPlayerHref { get; set; }
         public string TournamentHref { get; set; }
         public string MarkWinnerHref { get; set; }
+
+        public string Href { get; set; }
     }
 }
