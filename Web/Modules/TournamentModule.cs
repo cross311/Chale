@@ -95,7 +95,7 @@ namespace Web.Modules
             var newTournament = _service.Create(createViewModel.Name, createViewModel.Description);
 
             if (this.Request.Headers.Accept.Any(a => a.Item1.Contains("html")))
-                return Response.AsRedirect("~/tournaments/");
+                return Response.AsRedirect("~" + Href.Tournaments);
 
             return HttpStatusCode.NoContent;
         }
@@ -109,7 +109,7 @@ namespace Web.Modules
             tournament = _service.Start(tournament);
 
             if (this.Request.Headers.Accept.Any(a => a.Item1.Contains("html")))
-                return Response.AsRedirect(string.Format("~/tournaments/{0}", tournament.TournamentId));
+                return Response.AsRedirect("~"+ Href.TournamentHref(tournament.TournamentId));
 
             return HttpStatusCode.NoContent;
         }

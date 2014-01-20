@@ -168,14 +168,14 @@ namespace Web
             return string.Format(href, routeReplacements);
         }
 
-        public static string ToNancyRouteAllInts(string href, params string[] routeReplacements)
+        public static string ToNancyRouteAllInts(string href, params string[] routeParams)
         {
-            string[] intRoutesReplacement = new string[routeReplacements.Length];
-            for (int i = 0; i < routeReplacements.Length; i++)
+            string[] intRouteParams = new string[routeParams.Length];
+            for (int i = 0; i < routeParams.Length; i++)
 			{
-		        intRoutesReplacement[i] = string.Format("{0}{1}{2}","{", routeReplacements[i],":int}");
+		        intRouteParams[i] = string.Format("{0}{1}{2}","{", routeParams[i],":int}");
 	        }
-            return ToNancyRoute(href, intRoutesReplacement);
+            return ToNancyRoute(href, intRouteParams);
         }
     }
 }

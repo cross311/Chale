@@ -15,14 +15,14 @@ namespace Web.Modules
         private TournamentService _service;
 
         public GameModule(IRepository<Tournament> repo, TournamentService service)
-            : base("/tournaments/{tournamentId:int}/games/")
+            : base(Href.ToNancyRouteAllInts(Href.TournamentsGames,"tournamentId"))
         {
             this._repo = repo;
             this._service = service;
 
-            Get["/"] = List;
-            Get["/{id:int}"] = Display;
-            Post["/winner"] = Winner;
+            Get[Href.Root] = List;
+            Get[Href.ToNancyRouteAllInts(Href.Get, "id")] = Display;
+            Post[Href.Winner] = Winner;
         }
 
         private dynamic List(dynamic arg)
