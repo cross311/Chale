@@ -1,4 +1,63 @@
-﻿<h1>{{tournamentVm.Name}} <small>Chale</small></h1>
-<p>{{tournamentVm.Description}}</p>
+﻿<h1><span ng-bind="tournamentVm.Name"></span> <small>Chale</small></h1>
+<p ng-bind="tournamentVm.Description"></p>
 <a href="#/tournaments"><span class="icon icon-arrow-left"></span>Tournaments</a>
+<div class="row">
+    <div class="span12">
+        <h2>Games To Be Played</h2>
+    </div>
+    <div class="game span6" ng-repeat="game in gamesToBePlayed | orderBy: '+id'">
+        <div class="game-inprogress">
+            <h3 class="game-name">Game <span ng-bind="game.id"></span></h3>
+            <div class="game-header row">
+                <div class="span2">
+                    <span class="game-player btn" title="Mark Winner" ng-bind="game.player1"></span>
+                </div> <div class="span2"><span class="game-vs">Vs</span></div>
+                <div class="span2"><span class="game-player btn" title="Mark Winner" ng-bind="game.player2"></span></div>
+            </div>
+        </div>
+    </div>
+    <div class="span12">
+        <hr />
+    </div>
+</div>
+<div class="row">
+    <div class="span12">
+        <h2>Games Played</h2>
+    </div>
+    <div class="game span6" ng-repeat="game in gamesPlayed | orderBy: '-id'">
+        <div class="game-played">
+            <h3 class="game-name">Game <span ng-bind="game.id"></span></h3>
+            <div class="game-header row">
+                <div class="span2">
+                    <span class="game-player game-winner" ng-bind="game.winner"></span>
+                </div> <div class="span2"><span class="game-vs">Vs</span></div>
+                <div class="span2"><span class="game-player game-loser" ng-bind="game.loser"></span></div>
+            </div>
+            <div class="game-result row">
+                <div class="span6"><span class="game-winner" ng-bind="game.winner"></span> WON!</div>
+            </div>
+        </div>
+    </div>
+    <div class="span12">
+        <hr />
+    </div>
+</div>
+<div class="row">
+    <div class="span12">
+        <h2>Players</h2>
+    </div>
+    <div class="panel span6" ng-repeat="player in players | orderBy: '+name'">
+        <div class="panel-header" ng-bind="player.name">
+        </div>
+        <div class="panel-body">
+            <ul>
+                <li ng-repeat="gameOutCome in player.games">
+                    <span ng-show="gameOutCome.status === 'won'" class="game_out_come-beat">Beat <span ng-bind="gameOutCome.otherPlayer"></span></span>
+                    <span ng-show="gameOutCome.status === 'loss'" class="game_out_come-loss">Loss to <span ng-bind="gameOutCome.otherPlayer"></span></span>
+                    <span ng-show="gameOutCome.status === 'progress'" class="game_out_come-progress">Currently challenging <span ng-bind="gameOutCome.otherPlayer"></span></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 

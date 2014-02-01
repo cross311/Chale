@@ -62,6 +62,12 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\application.css">
+      <DependentUpon>application.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\application.min.css">
+      <DependentUpon>application.css</DependentUpon>
+    </Content>
     <Content Include="Content\css\bootstrap-responsive.css" />
     <Content Include="Content\css\bootstrap-responsive.min.css" />
     <Content Include="Content\css\bootstrap.css" />
@@ -183,6 +189,7 @@
     <Content Include="Content\scripts\angular\angular-route.min.js.map" />
     <Content Include="Content\scripts\angular\angular-touch.min.js.map" />
     <Content Include="Content\scripts\angular\angular.min.js.map" />
+    <Content Include="Content\css\application.less" />
     <None Include="Content\scripts\shared.js.bundle" />
     <Content Include="Content\scripts\shared.min.js.map">
       <DependentUpon>shared.js.bundle</DependentUpon>
