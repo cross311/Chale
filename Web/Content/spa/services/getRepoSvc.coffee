@@ -1,7 +1,7 @@
 ﻿# CoffeeScript
 getRepo = ($http, $log) ->
     
-    tournaments: (callback) ->
+    tournamentCollection: (callback) ->
         tournamentVm = 
             tournaments: []
         $http

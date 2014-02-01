@@ -3,5 +3,7 @@
   <!--The order of the <file> elements determines the order of the file contents when bundled.-->
   <file>/Content/spa/modules/chaleModule.js</file>
   <file>/Content/spa/services/getRepoSvc.js</file>
+  <file>/Content/spa/services/tournamentSvc.js</file>
   <file>/Content/spa/controllers/tournamentsCtrl.js</file>
+  <file>/Content/spa/controllers/tournamentCtrl.js</file>
 </bundle>

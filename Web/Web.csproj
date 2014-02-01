@@ -95,6 +95,12 @@
     <Content Include="Content\scripts\bootstrap.js" />
     <Content Include="Content\scripts\highlight.min.js" />
     <Content Include="Content\scripts\jquery.min.js" />
+    <Content Include="Content\spa\controllers\tournamentCtrl.js">
+      <DependentUpon>tournamentCtrl.coffee</DependentUpon>
+    </Content>
+    <Content Include="Content\spa\controllers\tournamentCtrl.min.js">
+      <DependentUpon>tournamentCtrl.js</DependentUpon>
+    </Content>
     <Content Include="Content\spa\controllers\tournamentsCtrl.js">
       <DependentUpon>tournamentsCtrl.coffee</DependentUpon>
     </Content>
@@ -113,12 +119,19 @@
     <Content Include="Content\spa\services\getRepoSvc.min.js">
       <DependentUpon>getRepoSvc.js</DependentUpon>
     </Content>
+    <Content Include="Content\spa\services\tournamentSvc.js">
+      <DependentUpon>tournamentSvc.coffee</DependentUpon>
+    </Content>
+    <Content Include="Content\spa\services\tournamentSvc.min.js">
+      <DependentUpon>tournamentSvc.js</DependentUpon>
+    </Content>
     <Content Include="Content\spa\spa_app.js">
       <DependentUpon>spa_app.js.bundle</DependentUpon>
     </Content>
     <Content Include="Content\spa\spa_app.min.js">
       <DependentUpon>spa_app.js.bundle</DependentUpon>
     </Content>
+    <Content Include="Content\spa\templates\tournament.html" />
     <Content Include="Content\spa\templates\tournaments.html" />
     <Content Include="Views\Game\game.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -176,6 +189,8 @@
     </Content>
     <Content Include="Content\spa\controllers\tournamentsCtrl.coffee" />
     <Content Include="Content\spa\services\getRepoSvc.coffee" />
+    <Content Include="Content\spa\controllers\tournamentCtrl.coffee" />
+    <Content Include="Content\spa\services\tournamentSvc.coffee" />
     <None Include="Content\spa\spa_app.js.bundle" />
     <Content Include="Content\spa\spa_app.min.js.map">
       <DependentUpon>spa_app.js.bundle</DependentUpon>

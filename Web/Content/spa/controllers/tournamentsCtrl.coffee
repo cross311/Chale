@@ -1,12 +1,12 @@
 ﻿# CoffeeScript
 
-tournamentsCtrl = ($scope, $http, Get) ->
+tournamentsCtrl = ($scope, $http, Tournament) ->
     $scope.newTournament =
         Name: ''
         Description: ''
     
     getTournaments = ->
-        $scope.tournamentsVm = Get.tournaments()
+        $scope.tournamentsVm = Tournament.getCollection()
     
     $scope.create = () ->
         form = $scope.createTournament
@@ -19,4 +19,4 @@ tournamentsCtrl = ($scope, $http, Get) ->
     getTournaments()
     $scope
         
-@chale.controller 'TournamentsCtrl', ['$scope', '$http', 'GetRepo', tournamentsCtrl]
+@chale.controller 'TournamentsCtrl', ['$scope', '$http', 'Tournament', tournamentsCtrl]
