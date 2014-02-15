@@ -13,8 +13,8 @@ namespace Web.Modules
     public class GameModule : NancyModule
     {
 
-        private IRepository<Tournament> _repo;
-        private TournamentService _service;
+        private readonly IRepository<Tournament> _repo;
+        private readonly TournamentService _service;
 
         public GameModule(IRepository<Tournament> repo, TournamentService service)
             : base(Href.ToNancyRouteAllInts(Href.TournamentsGames, "tournamentId"))
@@ -52,9 +52,9 @@ namespace Web.Modules
         {
             Tournament tournament = arg.tournament;
             Int32 gameId = arg.id;
-            PostWinnerModel postWinnerModel = this.Bind<PostWinnerModel>();
+            var postWinnerModel = this.Bind<PostWinnerModel>();
 
-            Game game = tournament.Games.SingleOrDefault(g => g.GameId == gameId);
+            var game = tournament.Games.SingleOrDefault(g => g.GameId == gameId);
             if (game == null) return new NotFoundResponse();
 
             var winningPlayer = game.Players.SingleOrDefault(p => p.PlayerId == postWinnerModel.WinningPlayerId);
@@ -65,7 +65,7 @@ namespace Web.Modules
             if (this.Request.Headers.Accept.Any(a => a.Item1.Contains("html")))
                 return Response.AsRedirect(Href.TournamentsGameHref(tournament.TournamentId, game.GameId));
 
-            return HttpStatusCode.NoContent;
+            return new GameModel.Mapper(tournament).ToModel(game);
 
         }
 
@@ -108,10 +108,10 @@ namespace Web.Modules
                 }
             }
         }
+    }
 
         public class PostWinnerModel
         {
             public Int32 WinningPlayerId { get; set; }
         }
-    }
 }

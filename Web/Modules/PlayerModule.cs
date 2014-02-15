@@ -43,15 +43,7 @@ namespace Web.Modules
             PlayersModel playersModel = new PlayersModel()
             {
                 Players = tournament.Players.Select(p =>
-                        new PlayerModel
-                        {
-                            Id = p.PlayerId,
-                            Href = Href.TournamentsPlayerHref(tournament.TournamentId, p.PlayerId),
-                            GamesHref = Href.TournamentsPlayerGamesHref(tournament.TournamentId, p.PlayerId),
-                            TournamentHref = Href.TournamentHref(tournament.TournamentId),
-                            Name = p.Name,
-                            NumberOfWonGames = tournament.Games.Count(g => g.Winner != null && g.Winner == p)
-                        }
+                         new PlayerModel.Mapper(tournament).ToModel(p)
                     ).ToList()
             };
             playersModel.AddPlayerHref = Href.TournamentsPlayerCreateHref(tournament.TournamentId);
@@ -62,7 +54,7 @@ namespace Web.Modules
         private dynamic Create(dynamic arg)
         {
             Tournament tournament = arg.tournament;
-            AddPlayerModel addPlayer = this.Bind<AddPlayerModel>();
+            var addPlayer = this.Bind<AddPlayerModel>();
 
             var newPlayer = new Player(addPlayer.Name);
             newPlayer = _service.AddPlayer(tournament, newPlayer);
@@ -70,7 +62,7 @@ namespace Web.Modules
             if (this.Request.Headers.Accept.Any(a => a.Item1.Contains("html")))
                 return Response.AsRedirect(Href.TournamentsPlayerHref(tournament.TournamentId, newPlayer.PlayerId));
 
-            return HttpStatusCode.NoContent;
+            return new PlayerModel.Mapper(tournament).ToModel(newPlayer);
         }
 
         private dynamic Display(dynamic arg)
