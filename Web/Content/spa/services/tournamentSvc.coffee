@@ -6,14 +6,15 @@ tournamentSvc = ($http, Get) ->
         Get.tournamentCollection callback
         
     get = (tournamentId, callback) ->
-        tournament = {}
-        $http.get("/tournaments/#{tournamentId}")
+        Get.tournament tournamentId, callback
+    create = (createHref, model, callback) ->
+        $http.post(createHref, model)
         .success (data, status, headers, config) ->
             callback data
-        tournament
     
     getCollection: getCollection
     get: get
+    create: create
         
 
 @chale.factory 'Tournament', ['$http', 'GetRepo', tournamentSvc]

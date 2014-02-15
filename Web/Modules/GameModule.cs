@@ -80,6 +80,9 @@ namespace Web.Modules
             public Int32 Id { get; set; }
             public List<PlayerModel> Players { get; set; }
             public PlayerModel WinningPlayer { get; set; }
+            public bool IsOpen { get; set; }
+            public bool IsInProgress { get; set; }
+            public bool IsComplete { get; set; }
             public string TournamentHref { get; set; }
             public string PostWinnerHref { get; set; }
             public string Href { get; set; }
@@ -103,7 +106,10 @@ namespace Web.Modules
                         TournamentHref = Web.Href.TournamentHref(tournament.TournamentId),
                         TournamentGamesHref = Web.Href.TournamentsGamesHref(tournament.TournamentId),
                         Players = game.Players.Select(new PlayerModel.Mapper(tournament).ToModel).ToList(),
-                        WinningPlayer = game.Winner != null ? new PlayerModel.Mapper(tournament).ToModel(game.Winner) : default(PlayerModel)
+                        WinningPlayer = game.Winner != null ? new PlayerModel.Mapper(tournament).ToModel(game.Winner) : default(PlayerModel),
+                        IsOpen =  game.IsOpen(),
+                        IsInProgress = game.IsInProgress(),
+                        IsComplete = game.IsCompleted()
                     };
                 }
             }

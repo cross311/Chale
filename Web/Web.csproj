@@ -101,6 +101,12 @@
     <Content Include="Content\scripts\bootstrap.js" />
     <Content Include="Content\scripts\highlight.min.js" />
     <Content Include="Content\scripts\jquery.min.js" />
+    <Content Include="Content\spa\controllers\createTournamentCtrl.js">
+      <DependentUpon>createTournamentCtrl.coffee</DependentUpon>
+    </Content>
+    <Content Include="Content\spa\controllers\createTournamentCtrl.min.js">
+      <DependentUpon>createTournamentCtrl.js</DependentUpon>
+    </Content>
     <Content Include="Content\spa\controllers\tournamentCtrl.js">
       <DependentUpon>tournamentCtrl.coffee</DependentUpon>
     </Content>
@@ -119,11 +125,23 @@
     <Content Include="Content\spa\modules\chaleModule.min.js">
       <DependentUpon>chaleModule.js</DependentUpon>
     </Content>
+    <Content Include="Content\spa\services\gameSvc.js">
+      <DependentUpon>gameSvc.coffee</DependentUpon>
+    </Content>
+    <Content Include="Content\spa\services\gameSvc.min.js">
+      <DependentUpon>gameSvc.js</DependentUpon>
+    </Content>
     <Content Include="Content\spa\services\getRepoSvc.js">
       <DependentUpon>getRepoSvc.coffee</DependentUpon>
     </Content>
     <Content Include="Content\spa\services\getRepoSvc.min.js">
       <DependentUpon>getRepoSvc.js</DependentUpon>
+    </Content>
+    <Content Include="Content\spa\services\playerSvc.js">
+      <DependentUpon>playerSvc.coffee</DependentUpon>
+    </Content>
+    <Content Include="Content\spa\services\playerSvc.min.js">
+      <DependentUpon>playerSvc.js</DependentUpon>
     </Content>
     <Content Include="Content\spa\services\tournamentSvc.js">
       <DependentUpon>tournamentSvc.coffee</DependentUpon>
@@ -198,6 +216,9 @@
     <Content Include="Content\spa\services\getRepoSvc.coffee" />
     <Content Include="Content\spa\controllers\tournamentCtrl.coffee" />
     <Content Include="Content\spa\services\tournamentSvc.coffee" />
+    <Content Include="Content\spa\controllers\createTournamentCtrl.coffee" />
+    <Content Include="Content\spa\services\playerSvc.coffee" />
+    <Content Include="Content\spa\services\gameSvc.coffee" />
     <None Include="Content\spa\spa_app.js.bundle" />
     <Content Include="Content\spa\spa_app.min.js.map">
       <DependentUpon>spa_app.js.bundle</DependentUpon>

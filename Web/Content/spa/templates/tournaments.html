@@ -5,7 +5,7 @@
         <a href="#/tournaments/{{tournament.Id}}">{{tournament.Name}}</a>
     </li>
 </ul>
-<form name="createTournament" class="form">
+<form name="createTournament" class="form" ng-controller="createTournamentCtrl">
     <label for="name" class="sr-only">Name</label>
     <input type="text" placeholder="Name..." name="name" ng-model="newTournament.Name" required maxlength="255">
     <label for="description" class="sr-only">Description</label>

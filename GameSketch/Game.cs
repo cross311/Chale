@@ -11,11 +11,11 @@ namespace GameSketch
     public class TournamentService
     {
         const int NumberOfPlayersPerGame = 2;
-        readonly IRepository<Tournament> _tournamentRepo;
+        readonly IRepository<Tournament> _tournamentRepoFactory;
 
-        public TournamentService(IRepository<Tournament> tournamentRepo)
+        public TournamentService(IRepository<Tournament> tournamentRepoFactory)
         {
-            this._tournamentRepo = tournamentRepo;
+            this._tournamentRepoFactory = tournamentRepoFactory;
         }
 
         public Tournament Start(Tournament tournament)
@@ -34,7 +34,7 @@ namespace GameSketch
                 tournament.AddGame(new Game(openGamesLevel, players.Skip(numberOfGames * NumberOfPlayersPerGame).Take(NumberOfPlayersPerGame)));
             }
 
-            _tournamentRepo.SaveChanges();
+            _tournamentRepoFactory.SaveChanges();
             return tournament;
         }
 
@@ -44,7 +44,7 @@ namespace GameSketch
 
             tournament = GameWonLogic(tournament, wonGame, playerWhoWon);
 
-            _tournamentRepo.SaveChanges();
+            _tournamentRepoFactory.SaveChanges();
             return tournament;
         }
 
@@ -56,15 +56,15 @@ namespace GameSketch
                 Description = description
             };
 
-            newTournament = _tournamentRepo.AddNew(newTournament);
-            _tournamentRepo.SaveChanges();
+            newTournament = _tournamentRepoFactory.AddNew(newTournament);
+            _tournamentRepoFactory.SaveChanges();
             return newTournament;
         }
 
         public Player AddPlayer(Tournament tournament, Player newPlayer)
         {
             newPlayer = tournament.AddPlayer(newPlayer);
-            _tournamentRepo.SaveChanges();
+            _tournamentRepoFactory.SaveChanges();
 
             return newPlayer;
         }

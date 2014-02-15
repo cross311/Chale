@@ -119,7 +119,13 @@ Metrics.typemock*
 *.dbmdl
 
 # ignore spa coffee script js files
+/Web/Content/spa/modules/*.js
+/Web/Content/spa/modules/*.js.map
+/Web/Content/spa/controllers/*.js
+/Web/Content/spa/controllers/*.js.map
+/Web/Content/spa/services/*.js
+/Web/Content/spa/services/*.js.map
 /Web/Content/spa/*.js
-/Web/Content/spa/*/*.js
 /Web/Content/spa/*.js.map
-/Web/Content/spa/*/*.js.map
+/Web/Content/css/*.css
+/Web/Content/css/*.css.min

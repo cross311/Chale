@@ -20,3 +20,5 @@ tournamentsCtrl = ($scope, $http, Tournament) ->
     $scope
         
 @chale.controller 'TournamentsCtrl', ['$scope', '$http', 'Tournament', tournamentsCtrl]
+
+
